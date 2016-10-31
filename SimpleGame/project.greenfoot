@@ -1,0 +1,5 @@
+#Greenfoot properties
+#Mon Oct 31 13:48:46 EDT 2016
+version=2.5.0
+project.charset=UTF-8
+class.InputInterface.superclass=greenfoot.Actor
