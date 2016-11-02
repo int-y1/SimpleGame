@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -14,9 +15,8 @@ import java.io.IOException;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class InputInterface
+public class InputInterface extends Actor
 {
-    private final String REPLAY_FOLDER = "replays";
     public final boolean REPLAY;
     
     private Queue<Character> keystrokes = new LinkedList<Character>();
@@ -28,18 +28,16 @@ public class InputInterface
     
     public InputInterface() {
         REPLAY = false;
-        // try creating the replayFolder
-        new File(REPLAY_FOLDER).mkdirs();
     }
     
-    public InputInterface(String replayFile) throws IOException {
+    public InputInterface(String replayPath) throws IOException {
         REPLAY = true;
         // get the file input
-        File tempFile = new File(REPLAY_FOLDER, replayFile);
+        File tempFile = new File(replayPath);
         FileReader in = new FileReader(tempFile);
         // read all bytes
         int letter = in.read();
-        while (letter!=-1) {
+        while (letter != -1) {
             System.out.println(letter);
             keystrokes.add((char) letter);
             letter = in.read();
@@ -49,33 +47,62 @@ public class InputInterface
     
     public void getNewStrokes() {
         if (REPLAY) {
-            addStroke();
+            readFileStroke();
         }
         else {
-            putStroke();
+            readUserStroke();
         }
     }
     
-    public void addStroke() {
+    public void readUserStroke() {
         // replace the keys
         right=Greenfoot.isKeyDown("right");
         up=Greenfoot.isKeyDown("up");
         left=Greenfoot.isKeyDown("left");
         down=Greenfoot.isKeyDown("down");
+        
+        // encode A
         // get the corresponding number
         // note that the bits are inserted backwards
         // the least significant bits should be last in the number
         int num = 0;
-        num = ((num << 1) | (down? 1 : 0));
-        num = ((num << 1) | (left? 1 : 0));
-        num = ((num << 1) | (up? 1 : 0));
-        num = ((num << 1) | (right? 1 : 0));
+        num = (num*2 + (down? 1:0));
+        num = (num*2 + (left? 1:0));
+        num = (num*2 + (up? 1:0));
+        num = (num*2 + (right? 1:0));
+        
+        // encode B
         // ASCII values 33-126 are good non-whitespace characters for the file
         // only 33-48 are used right now
-        keystrokes.add((char) (num+33));
+        num += 33;
+        keystrokes.add((char) num);
     }
     
-    public void putStroke() {
-        // remove a stroke from the queue
+    public void readFileStroke() {
+        // get a keystroke
+        int num = (int) keystrokes.poll();
+        
+        // decode B
+        num -= 33;
+        
+        // decode A
+        right = (num%2 == 1);
+        num /= 2;
+        up = (num%2 == 1);
+        num /= 2;
+        left = (num%2 == 1);
+        num /= 2;
+        down = (num%2 == 1);
+    }
+    
+    public void saveReplay(String replayPath) throws IOException {
+        // assume that REPLAY is true
+        FileWriter out = new FileWriter(replayPath);
+        
+        while (!keystrokes.isEmpty()) {
+            out.write(keystrokes.poll());
+        }
+        
+        out.close();
     }
 }
