@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class InputInterface extends Actor
+public class InputInterface
 {
     public final boolean REPLAY;
     
@@ -80,10 +80,14 @@ public class InputInterface extends Actor
     
     public void readFileStroke() {
         // get a keystroke
-        int num = (int) keystrokes.poll();
-        
-        // decode B
-        num -= 33;
+        int num;
+        if (keystrokes.isEmpty()) {
+            num = 0;
+        }
+        else {
+            // decode B
+            num = (int) keystrokes.poll() - 33;
+        }
         
         // decode A
         right = (num%2 == 1);

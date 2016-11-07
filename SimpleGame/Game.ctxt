@@ -1,8 +1,18 @@
 #BlueJ class context
-comment0.params=
-comment0.target=Game()
-comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Game.\r\n\ \r\n
-comment1.params=replayPath
-comment1.target=Game(java.lang.String)
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Game.\r\n\ \r\n
-numComments=2
+comment0.params=levelPath
+comment0.target=Game(java.lang.String)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Game.\r\n\ This\ method\ is\ used\ for\ playing\ a.\r\n\ \r\n
+comment1.params=levelPath\ replayPath
+comment1.target=Game(java.lang.String,\ java.lang.String)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Game.\r\n\ This\ method\ is\ used\ for\ replaying\ a\ file.\r\n
+comment2.params=
+comment2.target=boolean\ keyRight()
+comment3.params=
+comment3.target=boolean\ keyUp()
+comment4.params=
+comment4.target=boolean\ keyLeft()
+comment5.params=
+comment5.target=boolean\ keyDown()
+comment6.params=x\ y
+comment6.target=int\ getPlayerDist(int,\ int)
+numComments=7
