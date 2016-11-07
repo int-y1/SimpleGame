@@ -1,12 +1,14 @@
 #BlueJ class context
 comment0.params=
 comment0.target=InputInterface()
-comment1.params=replayFile
+comment1.params=replayPath
 comment1.target=InputInterface(java.lang.String)
 comment2.params=
 comment2.target=void\ getNewStrokes()
 comment3.params=
-comment3.target=void\ addStroke()
+comment3.target=void\ readUserStroke()
 comment4.params=
-comment4.target=void\ putStroke()
-numComments=5
+comment4.target=void\ readFileStroke()
+comment5.params=replayPath
+comment5.target=void\ saveReplay(java.lang.String)
+numComments=6
