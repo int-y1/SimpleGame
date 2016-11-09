@@ -1,5 +1,11 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.ArrayList;
+
+import java.util.Scanner;
+import java.io.InputStream;
 import java.io.IOException;
 
 /**
@@ -11,54 +17,65 @@ import java.io.IOException;
 public class Game extends World
 {
     
+    private final int LEVEL;
+    private Queue<Integer> instID = new LinkedList<Integer>();
+    private Queue<ArrayList<Integer> > instInfo = new LinkedList<ArrayList<Integer> >();
+    
+    
     /**
      * Constructor for objects of class Game.
-     * This method is used for playing a.
+     * This method is used for playing a level.
      * 
      */
     public Game(String levelPath) throws IOException
-    {    
-        // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
+    {
+        // screen size is 512x512 pixels
         super(512, 512, 1);
-        userInput = new InputInterface();
+        USER_INPUT = new InputInterface();
+        // get the level info
+        InputStream stream = getClass().getResourceAsStream(levelPath);
+        Scanner sc = new Scanner(stream);
+        LEVEL = sc.nextInt();
+        int instructions = sc.nextInt();
     }
     
     /**
      * Constructor for objects of class Game.
      * This method is used for replaying a file.
-     */
+     *
     public Game(String levelPath, String replayPath) throws IOException
-    {    
-        // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
+    {
+        // screen size is 512x512 pixels
         super(512, 512, 1);
-        userInput = new InputInterface(replayPath); 
-    }
+        USER_INPUT = new InputInterface();
+        // get the level info
+    }*/
     
     // user input methods
-    private final InputInterface userInput;
+    private final InputInterface USER_INPUT;
     
     public boolean keyRight()
     {
-        return userInput.right;
+        return USER_INPUT.right;
     }
     
     public boolean keyUp()
     {
-        return userInput.up;
+        return USER_INPUT.up;
     }
     
     public boolean keyLeft()
     {
-        return userInput.left;
+        return USER_INPUT.left;
     }
     
     public boolean keyDown()
     {
-        return userInput.down;
+        return USER_INPUT.down;
     }
     
     // user variables
-    Player player;
+    private Player player;
     
     public int getPlayerDist(int x, int y)
     {
