@@ -2,8 +2,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.Queue;
 import java.util.LinkedList;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -31,10 +31,11 @@ public class InputInterface
     }
     
     public InputInterface(String replayPath) throws IOException {
+        System.out.printf("Reading Replay: %s\n", replayPath);
         REPLAY = true;
         // get the file input
-        File tempFile = new File(replayPath);
-        FileReader in = new FileReader(tempFile);
+        InputStream stream = getClass().getResourceAsStream(replayPath);
+        InputStreamReader in = new InputStreamReader(stream);
         // read all bytes
         int letter = in.read();
         while (letter != -1) {
@@ -42,7 +43,7 @@ public class InputInterface
             keystrokes.add((char) letter);
             letter = in.read();
         }
-        System.out.println(tempFile.getPath());
+        System.out.printf("Done Reading\n");
     }
     
     public void getNewStrokes() {
