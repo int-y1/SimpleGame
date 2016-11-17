@@ -26,24 +26,25 @@ public class InputInterface
     public boolean left;
     public boolean down;
     
-    public InputInterface() {
-        REPLAY = false;
-    }
-    
     public InputInterface(String replayPath) throws IOException {
-        System.out.printf("Reading Replay: %s\n", replayPath);
-        REPLAY = true;
-        // get the file input
-        InputStream stream = getClass().getResourceAsStream(replayPath);
-        InputStreamReader in = new InputStreamReader(stream);
-        // read all bytes
-        int letter = in.read();
-        while (letter != -1) {
-            System.out.println(letter);
-            keystrokes.add((char) letter);
-            letter = in.read();
+        if (replayPath == null || replayPath == "") {
+            REPLAY = false;
         }
-        System.out.printf("Done Reading\n");
+        else {
+            System.out.printf("Reading Replay: %s\n", replayPath);
+            REPLAY = true;
+            // get the file input
+            InputStream stream = getClass().getResourceAsStream(replayPath);
+            InputStreamReader in = new InputStreamReader(stream);
+            // read all bytes
+            int letter = in.read();
+            while (letter != -1) {
+                System.out.println(letter);
+                keystrokes.add((char) letter);
+                letter = in.read();
+            }
+            System.out.printf("Done Reading\n");
+        }
     }
     
     public void getNewStrokes() {

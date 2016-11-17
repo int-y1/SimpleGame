@@ -18,6 +18,7 @@ public class Game extends World
 {
     
     private final int LEVEL;
+    private Queue<Integer> instTime = new LinkedList<Integer>();
     private Queue<Integer> instID = new LinkedList<Integer>();
     private Queue<ArrayList<Integer> > instInfo = new LinkedList<ArrayList<Integer> >();
     
@@ -27,29 +28,17 @@ public class Game extends World
      * This method is used for playing a level.
      * 
      */
-    public Game(String levelPath) throws IOException
+    public Game(String levelPath, String replayPath) throws IOException
     {
         // screen size is 512x512 pixels
         super(512, 512, 1);
-        USER_INPUT = new InputInterface();
+        USER_INPUT = new InputInterface(replayPath);
         // get the level info
         InputStream stream = getClass().getResourceAsStream(levelPath);
         Scanner sc = new Scanner(stream);
         LEVEL = sc.nextInt();
         int instructions = sc.nextInt();
     }
-    
-    /**
-     * Constructor for objects of class Game.
-     * This method is used for replaying a file.
-     *
-    public Game(String levelPath, String replayPath) throws IOException
-    {
-        // screen size is 512x512 pixels
-        super(512, 512, 1);
-        USER_INPUT = new InputInterface();
-        // get the level info
-    }*/
     
     // user input methods
     private final InputInterface USER_INPUT;
