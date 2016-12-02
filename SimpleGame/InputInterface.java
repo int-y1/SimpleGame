@@ -12,8 +12,8 @@ import java.io.IOException;
  * The variables in this class are NOT protected.
  * It is up to the other classes to declare this object as private.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jason Yuen
+ * @version a0.01
  */
 public class InputInterface
 {
