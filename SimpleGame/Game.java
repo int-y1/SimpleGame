@@ -23,6 +23,7 @@ public class Game extends World
     
     private final InputInterface USER_INPUT;
     private final LevelReader LR;
+    private Player player;
     
     /**
      * Constructor for objects of class Game.
@@ -40,6 +41,8 @@ public class Game extends World
         // put level number
         LEVEL = levelNumber;
         
+        // put player into the game
+        
         // get the level file into a Scanner
         InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, levelNumber));
         Scanner sc = new Scanner(stream);
@@ -50,7 +53,9 @@ public class Game extends World
         
     }
     
+    
     // user input methods
+    
     public boolean keyRight()
     {
         return USER_INPUT.right;
@@ -71,13 +76,34 @@ public class Game extends World
         return USER_INPUT.down;
     }
     
-    // user variables
-    private Player player;
+    
+    // player methods
     
     public int getPlayerDist(int x, int y)
     {
         // simple distance formula
-        return (int) Math.sqrt(Math.pow(player.getX()-x, 2) + Math.pow(player.getY()-y, 2));
+        return player.getDist(x, y);
     }
     
+    public void playerLoseLife()
+    {
+        // make the player lose a life
+        player.loseLife();
+        
+        // create an explosion which destroys bullets (later)
+        this.addObject(new PlayerExplosion(), player.getX(), player.getY());
+        
+        // check if game over
+        if (player.getLives()==0) {
+            System.out.println("You fail!");
+            Greenfoot.stop();
+        }
+    }
+    
+    public void act()
+    {
+        // update the private classes
+        USER_INPUT.getNewStrokes();
+        LR.tick();
+    }
 }
