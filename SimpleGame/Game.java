@@ -17,6 +17,8 @@ import java.io.IOException;
 public class Game extends World
 {
     
+    private final String LEVEL_PATH= "/levels/level%d.txt";
+    
     private final int LEVEL;
     
     private final InputInterface USER_INPUT;
@@ -27,7 +29,7 @@ public class Game extends World
      * This method is used for playing a level.
      * 
      */
-    public Game(String levelPath, String replayPath) throws IOException
+    public Game(int levelNumber, String replayPath) throws IOException
     {
         // screen size is 512x512 pixels
         super(512, 512, 1);
@@ -35,19 +37,17 @@ public class Game extends World
         // get the user's input interface
         USER_INPUT = new InputInterface(replayPath);
         
+        // put level number
+        LEVEL = levelNumber;
+        
         // get the level file into a Scanner
-        InputStream stream = getClass().getResourceAsStream(levelPath);
+        InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, levelNumber));
         Scanner sc = new Scanner(stream);
-        
-        // get the first line
+        // parse the first line
         String temp = sc.nextLine();                    // first line from Scanner
-        String[] args = temp.trim().split("\\s+");      // separate the String by whitespace
-        
-        // parse the first line from args
-        LEVEL = Integer.parseInt(args[0]);
-        
-        // send Scanner to another class for processing
+        // send Scanner to another class for furtherprocessing
         LR = new LevelReader(this, sc);
+        
     }
     
     // user input methods

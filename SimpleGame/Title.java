@@ -31,10 +31,15 @@ public class Title extends World
      * Act - do whatever the Enemy wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public void act() 
+    public void act()
     {
         if (Greenfoot.mouseClicked(playButton)) {
-            System.out.println("You lose!");
+            try {
+                Greenfoot.setWorld(new Game(1, null));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
