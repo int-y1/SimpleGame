@@ -42,6 +42,8 @@ public class Game extends World
         LEVEL = levelNumber;
         
         // put player into the game
+        player = new Player(this);
+        this.addObject(player, 256, 384);
         
         // get the level file into a Scanner
         InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, levelNumber));
@@ -76,6 +78,16 @@ public class Game extends World
         return USER_INPUT.down;
     }
     
+    public boolean keyS()
+    {
+        return USER_INPUT.s;
+    }
+    
+    public boolean keyD()
+    {
+        return USER_INPUT.d;
+    }
+    
     
     // player methods
     
@@ -99,6 +111,7 @@ public class Game extends World
             Greenfoot.stop();
         }
     }
+    
     
     public void act()
     {

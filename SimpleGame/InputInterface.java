@@ -21,10 +21,13 @@ public class InputInterface
     
     private Queue<Character> keystrokes = new LinkedList<Character>();
     
+    // this is the order of the variables
     public boolean right;
     public boolean up;
     public boolean left;
     public boolean down;
+    public boolean s;
+    public boolean d;
     
     public InputInterface(String replayPath) throws IOException {
         if (replayPath == null || replayPath == "") {
@@ -62,12 +65,16 @@ public class InputInterface
         up=Greenfoot.isKeyDown("up");
         left=Greenfoot.isKeyDown("left");
         down=Greenfoot.isKeyDown("down");
+        s=Greenfoot.isKeyDown("s");
+        d=Greenfoot.isKeyDown("d");
         
         // encode A
         // get the corresponding number
         // note that the bits are inserted backwards
         // the least significant bits should be last in the number
         int num = 0;
+        num = (num*2 + (d? 1:0));
+        num = (num*2 + (s? 1:0));
         num = (num*2 + (down? 1:0));
         num = (num*2 + (left? 1:0));
         num = (num*2 + (up? 1:0));
@@ -99,6 +106,10 @@ public class InputInterface
         left = (num%2 == 1);
         num /= 2;
         down = (num%2 == 1);
+        num /= 2;
+        s = (num%2 == 1);
+        num /= 2;
+        d = (num%2 == 1);
     }
     
     public void saveReplay(String replayPath) throws IOException {
