@@ -23,6 +23,7 @@ public class Game extends World
     
     private final InputInterface USER_INPUT;
     private final LevelReader LR;
+    private final BackgroundHelper BH;
     private Player player;
     
     /**
@@ -33,13 +34,16 @@ public class Game extends World
     public Game(int levelNumber, String replayPath) throws IOException
     {
         // screen size is 512x512 pixels
-        super(512, 512, 1);
-        
-        // get the user's input interface
-        USER_INPUT = new InputInterface(replayPath);
+        super(512, 512, 1, false);
         
         // put level number
         LEVEL = levelNumber;
+        
+        // add background
+        BH = new BackgroundHelper(this, LEVEL);
+        
+        // get the user's input interface
+        USER_INPUT = new InputInterface(replayPath);
         
         // put player into the game
         player = new Player(this);
@@ -118,5 +122,6 @@ public class Game extends World
         // update the private classes
         USER_INPUT.getNewStrokes();
         LR.tick();
+        BH.tick();
     }
 }
