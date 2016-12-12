@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.awt.Color;
 
 /**
  * Write a description of class Title here.
@@ -9,9 +10,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Title extends World
 {
     
-    private final String PLAY_BUTTON_PATH = "Closed Door.png";
+    private final boolean DEBUG = true;
+    private final String DEBUG_BUTTON_PATH = "Closed Door.png";
+    private Displayer debugPlayButton;
     
-    private Button playButton;
+    private final String PLAY_BUTTON_PATH = "Closed Door.png";
+    private final String TITLE_IMAGE_PATH = "TitleScreen.gif";
+    
+    private Displayer playButton;
+    private Displayer optionsButton;
+    private Displayer creditsButton;
+    private Displayer exitButton;
     
     /**
      * Constructor for objects of class Title.
@@ -22,9 +31,44 @@ public class Title extends World
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
         
+        // make the background
+        addObject(new GifDisplayer(TITLE_IMAGE_PATH), 256, 256);
+        
         // make the buttons
-        playButton = new Button(PLAY_BUTTON_PATH);
-        this.addObject(playButton, 256, 256);
+        GreenfootImage temp;
+        
+        // play button
+        temp = new GreenfootImage(110, 60);
+        if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
+        if (DEBUG) temp.fill();
+        playButton = new Displayer(temp);
+        addObject(playButton, 250, 410);
+        
+        // options button
+        temp = new GreenfootImage(100, 35);
+        if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
+        if (DEBUG) temp.fill();
+        optionsButton = new Displayer(temp);
+        addObject(optionsButton, 238, 473);
+        
+        // credits button
+        temp = new GreenfootImage(80, 60);
+        if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
+        if (DEBUG) temp.fill();
+        creditsButton = new Displayer(temp);
+        addObject(creditsButton, 50, 210);
+        
+        // exit button
+        temp = new GreenfootImage(60, 60);
+        if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
+        if (DEBUG) temp.fill();
+        exitButton = new Displayer(temp);
+        addObject(exitButton, 422, 214);
+        
+        if (DEBUG) {
+            debugPlayButton = new Displayer(PLAY_BUTTON_PATH);
+            addObject(debugPlayButton, 64, 64);
+        }
     }
     
     /**
@@ -33,7 +77,30 @@ public class Title extends World
      */
     public void act()
     {
+        // play button
         if (Greenfoot.mouseClicked(playButton)) {
+            try {
+                Greenfoot.setWorld(new Game(1, null));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        // options button
+        if (Greenfoot.mouseClicked(optionsButton)) {
+        }
+        
+        // credits button
+        if (Greenfoot.mouseClicked(creditsButton)) {
+        }
+        
+        // exit button
+        if (Greenfoot.mouseClicked(exitButton)) {
+        }
+        
+        // debug button
+        if (DEBUG && Greenfoot.mouseClicked(debugPlayButton)) {
             try {
                 Greenfoot.setWorld(new Game(1, null));
             }

@@ -1,10 +1,8 @@
 #BlueJ class context
-comment0.target=BackgroundHelper
-comment0.text=\r\n\ Maintains\ the\ background\ and\ updates\ info\ about\ the\ player's\ progress.\r\n\ \r\n\ @author\ Jason\ Yuen\r\n\ @version\ a0.01\r\n
-comment1.params=game\ level
-comment1.target=BackgroundHelper(Game,\ int)
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ BackgroundHelper\r\n
-comment2.params=
-comment2.target=void\ tick()
-comment2.text=\r\n\ Updates\ all\ of\ the\ current\ game's\ info\ and\ background.\r\n
-numComments=3
+comment0.params=game\ level
+comment0.target=BackgroundHelper(Game,\ int)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ BackgroundHelper\r\n
+comment1.params=
+comment1.target=void\ tickBackground()
+comment1.text=\r\n\ Move\ the\ background\ by\ a\ little.\r\n
+numComments=2

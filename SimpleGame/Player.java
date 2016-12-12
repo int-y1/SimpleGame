@@ -17,6 +17,8 @@ public class Player extends Actor
     {
         // get this game
         GAME = game;
+        
+        setImage("Isaac/backwards1.png");
     }
     
     // implement a lives system
@@ -37,20 +39,20 @@ public class Player extends Actor
     
     public int getDist(int x, int y)
     {
-        return (int) Math.sqrt(Math.pow(x-this.getX(), 2) + Math.pow(y-this.getY(), 2));
+        return (int) Math.sqrt(Math.pow(x-getX(), 2) + Math.pow(y-getY(), 2));
     }
     
     public void displacePlayer(int dx, int dy)
     {
-        int newX = this.getX()+dx;
-        int newY = this.getY()+dy;
+        int newX = getX()+dx;
+        int newY = getY()+dy;
         
         if (newX<32)  newX=32;
         if (newX>480) newX=480;
         if (newY<32)  newY=32;
         if (newY>480) newY=480;
         
-        this.setLocation(newX, newY);
+        setLocation(newX, newY);
     }
     
     

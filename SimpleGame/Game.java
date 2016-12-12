@@ -117,11 +117,19 @@ public class Game extends World
     }
     
     
+    private int cooldown = 100;
     public void act()
     {
         // update the private classes
         USER_INPUT.getNewStrokes();
         LR.tick();
-        BH.tick();
+        
+        // the map should be stopped at the beginning
+        if (cooldown > 0) {
+            cooldown--;
+        }
+        else {
+            BH.tickBackground();
+        }
     }
 }
