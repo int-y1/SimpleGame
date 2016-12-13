@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import greenfoot.*;
+import java.awt.Color;
 
 /**
  * Maintains the background and updates info about the player's progress.
@@ -10,7 +11,7 @@ import greenfoot.*;
 public class BackgroundHelper  
 {
     
-    private final Game GAME;
+    private Game game;
     private final int LEVEL;
     
     // background variables
@@ -18,24 +19,38 @@ public class BackgroundHelper
     private int bgY;
     private Displayer[] bgArray;
     private int movements=0;
+    private BackgroundFade bTint;
+    
+    // level display variables
+    private int score=0;
+    private int lives=3;
+    private Displayer exitButton;
     
     /**
      * Constructor for objects of class BackgroundHelper
      */
-    public BackgroundHelper(Game game, int level)
+    public BackgroundHelper(Game g, int level)
     {
         // initialize
-        GAME=game;
+        game=g;
         LEVEL=level;
-        bgImage = new GreenfootImage(String.format("map%d.png",level));
-        bgY=bgImage.getHeight();
         
         // initialize background displayers
+        bgImage = new GreenfootImage(String.format("map%d.png",level));
+        bgY=bgImage.getHeight();
         bgArray = new Displayer[(512/bgY)+2];
         for (int i=0; i<bgArray.length; i++) {
             bgArray[i] = new Displayer(bgImage);
-            GAME.addObject(bgArray[i], 256, bgY*(i-1));
+            game.addObject(bgArray[i], 256, bgY*(i-1));
         }
+        
+        // initialize the background tint
+        bTint = new BackgroundFade();
+        game.addObject(bTint, 256, 256);
+        
+        // initialize the level display
+        exitButton = new Displayer("Isaac/death3.png");
+        game.addObject(exitButton, 18, 14);
     }
     
     /**
@@ -57,5 +72,17 @@ public class BackgroundHelper
             }
             movements=0;
         }
+    }
+    
+    /**
+     * Tint the screen by this transparency.
+     */
+    public void fadeScreen(int alpha)
+    {
+        bTint.changeFade(alpha);
+    }
+    
+    public boolean hitExit() {
+        return Greenfoot.mouseClicked(exitButton);
     }
 }

@@ -11,29 +11,15 @@ public class Player extends Actor
     
     private final int SPEED_NORMAL = 6;
     private final int SPEED_SLOW = 2;
-    Game GAME;
+    protected Game game;
     
-    public Player(Game game)
+    public Player(Game g)
     {
         // get this game
-        GAME = game;
+        game = g;
         
         setImage("Isaac/backwards1.png");
     }
-    
-    // implement a lives system
-    private int lives = 3;
-    
-    public int getLives()
-    {
-        return lives;
-    }
-    
-    public void loseLife()
-    {
-        lives--;
-    }
-    
     
     // methods for coordinate geometry
     
@@ -54,7 +40,7 @@ public class Player extends Actor
         
         setLocation(newX, newY);
     }
-    
+    public void wat(){game.playerLoseLife();}
     
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
@@ -64,26 +50,26 @@ public class Player extends Actor
     {
         // read movements
         int moveSpeed;
-        if (GAME.keyS()) moveSpeed = SPEED_SLOW;
+        if (game.keyS()) moveSpeed = SPEED_SLOW;
         else moveSpeed = SPEED_NORMAL;
         
         // read the left/right keys
-        if (GAME.keyLeft()) {
-            if (!GAME.keyRight()) {
+        if (game.keyLeft()) {
+            if (!game.keyRight()) {
                 displacePlayer(-moveSpeed, 0);
             }
         }
-        else if (GAME.keyRight()) {
+        else if (game.keyRight()) {
             displacePlayer(moveSpeed, 0);
         }
         
         // read the up/down keys
-        if (GAME.keyUp()) {
-            if (!GAME.keyDown()) {
+        if (game.keyUp()) {
+            if (!game.keyDown()) {
                 displacePlayer(0, -moveSpeed);
             }
         }
-        else if (GAME.keyDown()) {
+        else if (game.keyDown()) {
             displacePlayer(0, moveSpeed);
         }
     }

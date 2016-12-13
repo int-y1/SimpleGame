@@ -24,7 +24,13 @@ public class Game extends World
     private final InputInterface USER_INPUT;
     private final LevelReader LR;
     private final BackgroundHelper BH;
+    private int beginningCooldown = 100;
+    
+    // player variables
     private Player player;
+    private int lives = 1;
+    private final int DEATH_DURATION = 200;     // duration of death animation
+    private int deathAnimation=DEATH_DURATION;
     
     /**
      * Constructor for objects of class Game.
@@ -35,17 +41,13 @@ public class Game extends World
     {
         // screen size is 512x512 pixels
         super(512, 512, 1, false);
-        
-        // put level number
         LEVEL = levelNumber;
         
         // add background
         BH = new BackgroundHelper(this, LEVEL);
         
-        // get the user's input interface
+        // initialize player-related variables
         USER_INPUT = new InputInterface(replayPath);
-        
-        // put player into the game
         player = new Player(this);
         this.addObject(player, 256, 384);
         
@@ -104,32 +106,65 @@ public class Game extends World
     public void playerLoseLife()
     {
         // make the player lose a life
-        player.loseLife();
-        
-        // create an explosion which destroys bullets (later)
-        this.addObject(new PlayerExplosion(), player.getX(), player.getY());
+        lives--;
         
         // check if game over
-        if (player.getLives()==0) {
-            System.out.println("You fail!");
-            Greenfoot.stop();
+        if (lives==0) {
+            player.setImage("Isaac/death1.png");
+        }
+        else {
+            // create an explosion which destroys bullets
+            this.addObject(new PlayerExplosion(), player.getX(), player.getY());
         }
     }
     
+    public boolean playerDead()
+    {
+        return lives==0;
+    }
     
-    private int cooldown = 100;
     public void act()
     {
-        // update the private classes
-        USER_INPUT.getNewStrokes();
-        LR.tick();
-        
-        // the map should be stopped at the beginning
-        if (cooldown > 0) {
-            cooldown--;
+        if (lives == 0) {
+            // player is dead
+            // check if animation is done
+            if (deathAnimation == 0) {
+                Greenfoot.setWorld(new Title());
+            }
+            deathAnimation--;
+            
+            // do player image
+            if (deathAnimation == (DEATH_DURATION*5)/6) {
+                player.setImage("Isaac/death2.png");
+            }
+            if (deathAnimation == (DEATH_DURATION*4)/6) {
+                player.setImage("Isaac/death3.png");
+            }
+            
+            // do background fading
+            BH.fadeScreen(((DEATH_DURATION-deathAnimation)*255) / DEATH_DURATION);
         }
         else {
-            BH.tickBackground();
+            // player is not dead
+            // check exit button
+            if (BH.hitExit()) {
+                // kill the player
+                lives=0;
+                player.setImage("Isaac/death1.png");
+                return;
+            }
+            
+            // update the private classes
+            USER_INPUT.getNewStrokes();
+            LR.tick();
+            
+            // the map should be stopped at the beginning
+            if (beginningCooldown > 0) {
+                beginningCooldown--;
+            }
+            else {
+                BH.tickBackground();
+            }
         }
     }
 }

@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=BackgroundFade
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ BackgroundFade\ here.\r\n\ \r\n\ @author\ Jason\ Yuen\r\n\ @version\ a0.01\r\n
+comment1.params=
+comment1.target=BackgroundFade()
+comment1.text=\r\n\ Initialize\ the\ tint\ at\ fully\ transparent.\r\n
+comment2.params=alpha
+comment2.target=void\ changeFade(int)
+numComments=3
