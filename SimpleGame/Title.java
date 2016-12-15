@@ -12,15 +12,15 @@ public class Title extends World
     
     private final boolean DEBUG = true;
     private final String DEBUG_BUTTON_PATH = "Closed Door.png";
-    private Displayer debugPlayButton;
+    private DisplayerTop debugPlayButton;
     
     private final String PLAY_BUTTON_PATH = "Closed Door.png";
     private final String TITLE_IMAGE_PATH = "TitleScreen.gif";
     
-    private Displayer playButton;
-    private Displayer optionsButton;
-    private Displayer creditsButton;
-    private Displayer exitButton;
+    private DisplayerTop playButton;
+    private DisplayerTop optionsButton;
+    private DisplayerTop creditsButton;
+    private DisplayerTop exitButton;
     
     /**
      * Constructor for objects of class Title.
@@ -30,6 +30,11 @@ public class Title extends World
     {
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
+        
+        // set paint order for the title screen
+        // earlier class is drawn on a later class
+        setPaintOrder(DisplayerTop.class,
+                      GifDisplayer.class);
         
         // make the background
         addObject(new GifDisplayer(TITLE_IMAGE_PATH), 256, 256);
@@ -41,32 +46,32 @@ public class Title extends World
         temp = new GreenfootImage(110, 60);
         if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
         if (DEBUG) temp.fill();
-        playButton = new Displayer(temp);
+        playButton = new DisplayerTop(temp);
         addObject(playButton, 250, 410);
         
         // options button
         temp = new GreenfootImage(100, 35);
         if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
         if (DEBUG) temp.fill();
-        optionsButton = new Displayer(temp);
+        optionsButton = new DisplayerTop(temp);
         addObject(optionsButton, 238, 473);
         
         // credits button
         temp = new GreenfootImage(80, 60);
         if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
         if (DEBUG) temp.fill();
-        creditsButton = new Displayer(temp);
+        creditsButton = new DisplayerTop(temp);
         addObject(creditsButton, 50, 210);
         
         // exit button
         temp = new GreenfootImage(60, 60);
         if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
         if (DEBUG) temp.fill();
-        exitButton = new Displayer(temp);
+        exitButton = new DisplayerTop(temp);
         addObject(exitButton, 422, 214);
         
         if (DEBUG) {
-            debugPlayButton = new Displayer(PLAY_BUTTON_PATH);
+            debugPlayButton = new DisplayerTop(PLAY_BUTTON_PATH);
             addObject(debugPlayButton, 64, 64);
         }
     }

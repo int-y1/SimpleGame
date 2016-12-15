@@ -15,32 +15,48 @@ public class BackgroundHelper
     private final int LEVEL;
     
     // background variables
-    private GreenfootImage bgImage;
+    private int beginningCountdown = 100;   // length of rest at the level's start
+    private int scrollTime;
     private int bgY;
-    private Displayer[] bgArray;
     private int movements=0;
+    
+    private GreenfootImage bgImage;         // temporary image
+    private DisplayerBottom[] bgArray;
+    private DisplayerMiddle wallBegin;
+    private DisplayerMiddle wallEnd;
     private BackgroundFade bTint;
     
     // level display variables
     private int score=0;
     private int lives=3;
-    private Displayer exitButton;
+    private DisplayerTop exitButton;
     
     /**
      * Constructor for objects of class BackgroundHelper
      */
-    public BackgroundHelper(Game g, int level)
+    public BackgroundHelper(Game g, int level, int mapLength)
     {
         // initialize
         game=g;
         LEVEL=level;
+        scrollTime=mapLength;
+        
+        // initialize starting wall
+        bgImage = new GreenfootImage(String.format("map%da.png", LEVEL));
+        wallBegin = new DisplayerMiddle(bgImage);
+        game.addObject(wallBegin, 256, 512 - wallBegin.getImage().getHeight()/2);
+        
+        // initialize ending wall
+        bgImage = new GreenfootImage(String.format("map%db.png", LEVEL));
+        wallEnd = new DisplayerMiddle(bgImage);
+        game.addObject(wallEnd, 256, wallEnd.getImage().getHeight()/2 - mapLength);
         
         // initialize background displayers
-        bgImage = new GreenfootImage(String.format("map%d.png",level));
+        bgImage = new GreenfootImage(String.format("map%d.png", LEVEL));
         bgY=bgImage.getHeight();
-        bgArray = new Displayer[(512/bgY)+2];
+        bgArray = new DisplayerBottom[(512/bgY)+2];
         for (int i=0; i<bgArray.length; i++) {
-            bgArray[i] = new Displayer(bgImage);
+            bgArray[i] = new DisplayerBottom(bgImage);
             game.addObject(bgArray[i], 256, bgY*(i-1));
         }
         
@@ -49,7 +65,7 @@ public class BackgroundHelper
         game.addObject(bTint, 256, 256);
         
         // initialize the level display
-        exitButton = new Displayer("Isaac/death3.png");
+        exitButton = new DisplayerTop("Isaac/death3.png");
         game.addObject(exitButton, 18, 14);
     }
     
@@ -58,6 +74,25 @@ public class BackgroundHelper
      */
     public void tickBackground()
     {
+        // do countdowns
+        if (beginningCountdown > 0) {
+            // still at the beginning
+            beginningCountdown--;
+            return;
+        }
+        
+        if (scrollTime == 0) {
+            // level is done scrolling
+            return;
+        }
+        scrollTime--;
+        
+        
+        // have the shift background a little
+        // move walls
+        wallBegin.move(0,1);
+        wallEnd.move(0,1);
+        
         // move the background a little down
         for (int i=0; i<bgArray.length; i++) {
             bgArray[i].move(0,1);

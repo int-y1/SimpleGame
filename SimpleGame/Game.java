@@ -24,11 +24,10 @@ public class Game extends World
     private final InputInterface USER_INPUT;
     private final LevelReader LR;
     private final BackgroundHelper BH;
-    private int beginningCooldown = 100;
     
     // player variables
     private Player player;
-    private int lives = 1;
+    private int lives = 3;
     private final int DEATH_DURATION = 200;     // duration of death animation
     private int deathAnimation=DEATH_DURATION;
     
@@ -43,8 +42,14 @@ public class Game extends World
         super(512, 512, 1, false);
         LEVEL = levelNumber;
         
-        // add background
-        BH = new BackgroundHelper(this, LEVEL);
+        // set paint order for the game
+        // earlier class is drawn on a later class
+        setPaintOrder(DisplayerTop.class,
+                      Player.class,
+                      BackgroundFade.class,
+                      Enemy.class,
+                      DisplayerMiddle.class,
+                      DisplayerBottom.class);
         
         // initialize player-related variables
         USER_INPUT = new InputInterface(replayPath);
@@ -55,9 +60,12 @@ public class Game extends World
         InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, levelNumber));
         Scanner sc = new Scanner(stream);
         // parse the first line
-        String temp = sc.nextLine();                    // first line from Scanner
+        String[] tokens = sc.nextLine().split("\\s+");      // first line from Scanner
         // send Scanner to another class for furtherprocessing
         LR = new LevelReader(this, sc);
+        
+        // add background
+        BH = new BackgroundHelper(this, LEVEL, Integer.parseInt(tokens[0]));
         
     }
     
@@ -157,14 +165,7 @@ public class Game extends World
             // update the private classes
             USER_INPUT.getNewStrokes();
             LR.tick();
-            
-            // the map should be stopped at the beginning
-            if (beginningCooldown > 0) {
-                beginningCooldown--;
-            }
-            else {
-                BH.tickBackground();
-            }
+            BH.tickBackground();
         }
     }
 }

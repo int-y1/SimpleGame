@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Player extends Actor
 {
     
-    private final int SPEED_NORMAL = 6;
+    private final int SPEED_NORMAL = 5;
     private final int SPEED_SLOW = 2;
     protected Game game;
     
