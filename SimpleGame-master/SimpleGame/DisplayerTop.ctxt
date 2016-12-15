@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=dx\ dy
+comment0.target=void\ move(int,\ int)
+comment0.text=\r\n\ Move\ the\ image.\r\n
+comment1.params=imagePath
+comment1.target=DisplayerTop(java.lang.String)
+comment1.text=\r\n\ Initialize\ the\ DisplayerTop's\ image.\r\n\ The\ given\ String\ is\ the\ path\ to\ an\ image.\r\n
+comment2.params=gfImage
+comment2.target=DisplayerTop(greenfoot.GreenfootImage)
+comment2.text=\r\n\ Alternate\ initialization.\r\n\ The\ actor's\ image\ will\ be\ set\ to\ the\ specific\ GreenfootImage\r\n
+numComments=3

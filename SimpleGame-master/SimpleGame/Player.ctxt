@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.params=g
+comment0.target=Player(Game)
+comment1.params=x\ y
+comment1.target=int\ getDist(int,\ int)
+comment2.params=dx\ dy
+comment2.target=void\ displacePlayer(int,\ int)
+comment3.params=
+comment3.target=void\ wat()
+comment4.params=
+comment4.target=void\ act()
+comment4.text=\r\n\ Act\ -\ do\ whatever\ the\ Player\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+numComments=5
