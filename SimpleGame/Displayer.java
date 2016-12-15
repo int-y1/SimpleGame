@@ -13,5 +13,5 @@ public class Displayer extends Actor
      */
     public void move(int dx, int dy) {
         setLocation(getX()+dx, getY()+dy);
-    }   
+    }
 }

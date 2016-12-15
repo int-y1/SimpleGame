@@ -48,6 +48,11 @@ public class Player extends Actor
      */
     public void act()
     {
+        // check if dead
+        if (game.playerDead()) {
+            return;
+        }
+        
         // read movements
         int moveSpeed;
         if (game.keyS()) moveSpeed = SPEED_SLOW;

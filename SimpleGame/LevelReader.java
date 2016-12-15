@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class LevelReader
 {
     
-    private final Game GAME;
+    private final Game game;
     private int time = 0;
     
     private Queue<Integer> eventTime = new LinkedList<Integer>();
@@ -28,7 +28,7 @@ public class LevelReader
      */
     public LevelReader(Game g, Scanner sc)
     {
-        GAME=g;
+        game=g;
         
         // read through the entire Scanner
         while (sc.hasNextInt()) {
@@ -44,6 +44,8 @@ public class LevelReader
             for (int i=0; i<listLength; i++) {
                 al.add(sc.nextInt());
             }
+            // done creation
+            eventInfo.offer(al);
         }
     }
     
@@ -65,7 +67,7 @@ public class LevelReader
             // do the appropriate action
             switch (id) {
                 case 100:
-                    System.out.printf("You win!\n");
+                    new Enemy100(game, al);
                     break;
                 default:
                     System.out.printf("Ignored unrecognized event ID %d\n", id);
