@@ -1,15 +1,13 @@
 #BlueJ class context
-comment0.target=BackgroundHelper
-comment0.text=\r\n\ Maintains\ the\ background\ and\ updates\ info\ about\ the\ player's\ progress.\r\n\ \r\n\ @author\ Jason\ Yuen\r\n\ @version\ a0.01\r\n
-comment1.params=g\ level\ mapLength
-comment1.target=BackgroundHelper(Game,\ int,\ int)
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ BackgroundHelper\r\n
-comment2.params=
-comment2.target=void\ tickBackground()
-comment2.text=\r\n\ Move\ the\ background\ by\ a\ little.\r\n
-comment3.params=alpha
-comment3.target=void\ fadeScreen(int)
-comment3.text=\r\n\ Tint\ the\ screen\ by\ this\ transparency.\r\n
-comment4.params=
-comment4.target=boolean\ hitExit()
-numComments=5
+comment0.params=g\ level\ mapLength
+comment0.target=BackgroundHelper(Game,\ int,\ int)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ BackgroundHelper\r\n
+comment1.params=
+comment1.target=void\ tickBackground()
+comment1.text=\r\n\ Move\ the\ background\ by\ a\ little.\r\n
+comment2.params=alpha
+comment2.target=void\ fadeScreen(int)
+comment2.text=\r\n\ Tint\ the\ screen\ by\ this\ transparency.\r\n
+comment3.params=
+comment3.target=boolean\ hitExit()
+numComments=4
