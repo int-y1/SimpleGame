@@ -12,6 +12,7 @@ public class Enemy extends Actor
     protected Game game;
     protected boolean dead = false;
     protected int deadAnimation;
+    protected int timer=0;          // number of frames since this object is created
     
     /**
      * Move the image.
@@ -49,6 +50,8 @@ public class Enemy extends Actor
             dying();
         }
         else {
+            // enemy is still alive
+            timer++;
             alive();
         }
     }

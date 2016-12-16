@@ -1,13 +1,15 @@
 #BlueJ class context
-comment0.params=g
-comment0.target=Player(Game)
-comment1.params=x\ y
-comment1.target=int\ getDist(int,\ int)
-comment2.params=dx\ dy
-comment2.target=void\ displacePlayer(int,\ int)
-comment3.params=
-comment3.target=void\ wat()
+comment0.target=Player
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Player\ here.\r\n\ \r\n\ @author\ Jason\ Yuen\r\n\ @version\ a0.01\r\n
+comment1.params=g
+comment1.target=Player(Game)
+comment2.params=x\ y
+comment2.target=int\ getDist(int,\ int)
+comment3.params=dx\ dy
+comment3.target=void\ displacePlayer(int,\ int)
 comment4.params=
-comment4.target=void\ act()
-comment4.text=\r\n\ Act\ -\ do\ whatever\ the\ Player\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
-numComments=5
+comment4.target=void\ wat()
+comment5.params=
+comment5.target=void\ act()
+comment5.text=\r\n\ Act\ -\ do\ whatever\ the\ Player\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+numComments=6
