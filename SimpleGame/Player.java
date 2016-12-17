@@ -11,6 +11,7 @@ public class Player extends Actor
     
     private final int SPEED_NORMAL = 5;
     private final int SPEED_SLOW = 2;
+    private final int INVINCIBILITY_FRAMES = 50;
     protected Game game;
     
     public Player(Game g)
@@ -20,6 +21,21 @@ public class Player extends Actor
         
         setImage("Isaac/backwards1.png");
     }
+    
+    
+    // invincibility methods
+    private int noHitFrames = 0;
+    
+    public boolean invincible()
+    {
+        return noHitFrames > 0;
+    }
+    
+    public void makeInvincible()
+    {
+        noHitFrames = INVINCIBILITY_FRAMES;
+    }
+    
     
     // methods for coordinate geometry
     
@@ -40,7 +56,6 @@ public class Player extends Actor
         
         setLocation(newX, newY);
     }
-    public void wat(){game.playerLoseLife();}
     
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
@@ -76,6 +91,22 @@ public class Player extends Actor
         }
         else if (game.keyDown()) {
             displacePlayer(0, moveSpeed);
+        }
+        
+        // invincibility frame transparency
+        if (noHitFrames > 0) {
+            // count down
+            noHitFrames--;
+            
+            // do transparency
+            if (noHitFrames == 0) {
+                getImage().setTransparency(255);
+            }
+            else {
+                // transparency will be a number between 64 and 128
+                getImage().setTransparency(128 - (noHitFrames*64)/INVINCIBILITY_FRAMES);
+            }
+            setImage(getImage());
         }
     }
 }

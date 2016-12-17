@@ -113,6 +113,11 @@ public class Game extends World
     
     public void playerLoseLife()
     {
+        // check if invincible
+        if (player.invincible()) {
+            return;
+        }
+        
         // make the player lose a life
         lives--;
         
@@ -121,19 +126,19 @@ public class Game extends World
             player.setImage("Isaac/death1.png");
         }
         else {
-            // create an explosion which destroys bullets
-            this.addObject(new PlayerExplosion(), player.getX(), player.getY());
+            // make the player invincible for a while
+            player.makeInvincible();
         }
     }
     
     public boolean playerDead()
     {
-        return lives==0;
+        return lives<=0;
     }
     
     public void act()
     {
-        if (lives == 0) {
+        if (playerDead()) {
             // player is dead
             // check if animation is done
             if (deathAnimation == 0) {
