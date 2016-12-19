@@ -20,7 +20,7 @@ public class Enemy100 extends Enemy
         enemySpeed = info.get(0);
         
         // add this actor
-        game.addObject(this, info.get(1), 0);
+        game.addObject(this, info.get(1), -20);
     }
     
     protected void dying() {
@@ -43,6 +43,11 @@ public class Enemy100 extends Enemy
             // hit player
             game.playerLoseLife();
             kill();
+        }
+        
+        if (outOfBounds(50)) {
+            // out of bounds
+            killFast();
         }
     }
 }

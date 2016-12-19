@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Write a description of class Enemy101 here.
@@ -22,7 +23,7 @@ public class Enemy101 extends Enemy
         shootSpeed = info.get(1);
         
         // add this actor
-        game.addObject(this, info.get(2), 0);
+        game.addObject(this, info.get(2), -20);
     }
     
     protected void dying() {
@@ -44,7 +45,7 @@ public class Enemy101 extends Enemy
             setImage("101santaPoop2.png");
             move(0, 1);
         }
-        else if (timer%70 < 55)  {
+        else if (timer%70 < 50)  {
             setImage("101santaPoop3.png");
             move(0, enemySpeed);
         }
@@ -52,8 +53,12 @@ public class Enemy101 extends Enemy
             setImage("101santaPoop4.png");
             move(0, 1);
             
-            if (timer%70 == 55) {
+            if (timer%70 == 50) {
                 // spawn tears
+                new Enemy102(game, new ArrayList<Integer> (Arrays.asList(getX(), getY(), 0, shootSpeed)));
+                new Enemy102(game, new ArrayList<Integer> (Arrays.asList(getX(), getY(), 0, -shootSpeed)));
+                new Enemy102(game, new ArrayList<Integer> (Arrays.asList(getX(), getY(), shootSpeed, 0)));
+                new Enemy102(game, new ArrayList<Integer> (Arrays.asList(getX(), getY(), -shootSpeed, 0)));
             }
         }
         
@@ -61,6 +66,11 @@ public class Enemy101 extends Enemy
             // hit player
             game.playerLoseLife();
             kill();
+        }
+        
+        if (outOfBounds(100)) {
+            // out of bounds
+            killFast();
         }
     }
 }

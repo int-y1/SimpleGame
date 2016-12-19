@@ -25,6 +25,22 @@ public class Enemy extends Actor
         dead = true;
     }
     
+    protected void killFast() {
+        game.removeObject(this);
+    }
+    
+    public boolean outOfBounds(int tolerance)
+    {
+        // check the four edges
+        if (getX() < -tolerance)    return true;
+        if (getX() > 512+tolerance) return true;
+        if (getY() < -tolerance)    return true;
+        if (getY() > 512+tolerance) return true;
+        
+        // this object is within bounds
+        return false;
+    }
+    
     protected void dying() {
         //
     }
