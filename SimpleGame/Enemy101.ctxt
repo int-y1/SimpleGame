@@ -1,10 +1,8 @@
 #BlueJ class context
-comment0.target=Enemy101
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Enemy101\ here.\r\n\ \r\n\ @author\ Jason\ Yuen\r\n\ @version\ a0.01\r\n
-comment1.params=g\ info
-comment1.target=Enemy101(Game,\ java.util.ArrayList)
+comment0.params=g\ info
+comment0.target=Enemy101(Game,\ java.util.ArrayList)
+comment1.params=
+comment1.target=void\ dying()
 comment2.params=
-comment2.target=void\ dying()
-comment3.params=
-comment3.target=void\ alive()
-numComments=4
+comment2.target=void\ alive()
+numComments=3

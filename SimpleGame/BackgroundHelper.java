@@ -109,6 +109,10 @@ public class BackgroundHelper
         }
     }
     
+    public boolean atLevelEnd() {
+        return scrollTime==0;
+    }
+    
     /**
      * Tint the screen by this transparency.
      */

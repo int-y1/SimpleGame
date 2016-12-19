@@ -1,14 +1,14 @@
 #BlueJ class context
-comment0.target=InputInterface
-comment0.text=\r\n\ The\ methods\ in\ this\ class\ handles\ the\ user's\ input\ and\ possible\ replaying\ of\ files.\r\n\ The\ variables\ in\ this\ class\ are\ NOT\ protected.\r\n\ It\ is\ up\ to\ the\ other\ classes\ to\ declare\ this\ object\ as\ private.\r\n\ \r\n\ @author\ Jason\ Yuen\r\n\ @version\ a0.01\r\n
-comment1.params=replayPath
-comment1.target=InputInterface(java.lang.String)
+comment0.params=replayPath
+comment0.target=InputInterface(java.lang.String)
+comment1.params=
+comment1.target=void\ getNewStrokes()
 comment2.params=
-comment2.target=void\ getNewStrokes()
+comment2.target=void\ readUserStroke()
 comment3.params=
-comment3.target=void\ readUserStroke()
+comment3.target=void\ readFileStroke()
 comment4.params=
-comment4.target=void\ readFileStroke()
+comment4.target=boolean\ isReplay()
 comment5.params=replayPath
 comment5.target=void\ saveReplay(java.lang.String)
 numComments=6
