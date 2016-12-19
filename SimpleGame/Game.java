@@ -17,6 +17,7 @@ import java.io.IOException;
 public class Game extends World
 {
     
+    private final int MAX_LEVEL = 2;
     private final String LEVEL_PATH= "/levels/level%d.txt";
     
     private final int LEVEL;
@@ -24,12 +25,13 @@ public class Game extends World
     private final InputInterface USER_INPUT;
     private final LevelReader LR;
     private final BackgroundHelper BH;
+    private boolean bgFading = false;
     
     // player variables
     private Player player;
     private int lives = 3;
-    private final int DEATH_DURATION = 200;     // duration of death animation
-    private int deathAnimation=DEATH_DURATION;
+    private final int FADE_DURATION = 200;      // duration of any fading animation
+    private int fadeAnimation=FADE_DURATION;
     
     /**
      * Constructor for objects of class Game.
@@ -124,6 +126,7 @@ public class Game extends World
         // check if game over
         if (lives==0) {
             player.setImage("Isaac/death1.png");
+            bgFading = true;
         }
         else {
             // make the player invincible for a while
@@ -136,26 +139,56 @@ public class Game extends World
         return lives<=0;
     }
     
+    public boolean isFading()
+    {
+        return bgFading;
+    }
+    
     public void act()
     {
-        if (playerDead()) {
-            // player is dead
+        if (bgFading) {
             // check if animation is done
-            if (deathAnimation == 0) {
-                Greenfoot.setWorld(new Title());
+            if (fadeAnimation == 0) {
+                if (playerDead() || USER_INPUT.isReplay()) {
+                    // player goes back to the title screen
+                    Greenfoot.setWorld(new Title());
+                }
+                else if (LEVEL == MAX_LEVEL) {
+                    // player completed the game
+                    Greenfoot.setWorld(new WinningScreen());
+                }
+                else {
+                    // player advances to a new level
+                    try {
+                        Greenfoot.setWorld(new Game(LEVEL+1, null));
+                    }
+                    catch (IOException e) {
+                        Greenfoot.setWorld(new Title());
+                    }
+                }
             }
-            deathAnimation--;
+            fadeAnimation--;
             
-            // do player image
-            if (deathAnimation == (DEATH_DURATION*5)/6) {
-                player.setImage("Isaac/death2.png");
+            if (playerDead()) {
+                // player is dead
+                
+                // do player image
+                if (fadeAnimation == (FADE_DURATION*5)/6) {
+                    player.setImage("Isaac/death2.png");
+                }
+                if (fadeAnimation == (FADE_DURATION*4)/6) {
+                    player.setImage("Isaac/death3.png");
+                }
             }
-            if (deathAnimation == (DEATH_DURATION*4)/6) {
-                player.setImage("Isaac/death3.png");
+            else {
+                // player has completed the level
+                for (Object e : getObjects(Enemy.class)) {
+                    ((Enemy)e).kill();
+                }
             }
             
             // do background fading
-            BH.fadeScreen(((DEATH_DURATION-deathAnimation)*255) / DEATH_DURATION);
+            BH.fadeScreen(((FADE_DURATION-fadeAnimation)*255) / FADE_DURATION);
         }
         else {
             // player is not dead
@@ -164,7 +197,19 @@ public class Game extends World
                 // kill the player
                 lives=0;
                 player.setImage("Isaac/death1.png");
+                bgFading = true;
                 return;
+            }
+            
+            // check if level is done
+            if (BH.atLevelEnd()) {
+                // check if player is at the end
+                if (256-32 <= player.getX() && player.getX() <= 256+32) {
+                    if (player.getY() == 32) {
+                        // player is at the door
+                        bgFading = true;
+                    }
+                }
             }
             
             // update the private classes

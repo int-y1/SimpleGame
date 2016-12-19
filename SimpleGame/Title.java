@@ -72,7 +72,7 @@ public class Title extends World
         
         if (DEBUG) {
             debugPlayButton = new DisplayerTop(PLAY_BUTTON_PATH);
-            addObject(debugPlayButton, 64, 64);
+            addObject(debugPlayButton, 64, 480);
         }
     }
     
@@ -107,7 +107,7 @@ public class Title extends World
         // debug button
         if (DEBUG && Greenfoot.mouseClicked(debugPlayButton)) {
             try {
-                Greenfoot.setWorld(new Game(1, null));
+                Greenfoot.setWorld(new Game(0, null));
             }
             catch (Exception e) {
                 e.printStackTrace();

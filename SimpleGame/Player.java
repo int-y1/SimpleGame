@@ -64,7 +64,7 @@ public class Player extends Actor
     public void act()
     {
         // check if dead
-        if (game.playerDead()) {
+        if (game.isFading()) {
             return;
         }
         

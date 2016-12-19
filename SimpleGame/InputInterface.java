@@ -112,6 +112,10 @@ public class InputInterface
         d = (num%2 == 1);
     }
     
+    public boolean isReplay() {
+        return REPLAY;
+    }
+    
     public void saveReplay(String replayPath) throws IOException {
         // assume that REPLAY is true
         FileWriter out = new FileWriter(replayPath);
