@@ -44,8 +44,8 @@ ID values supported
 	k2 - Speed of droplets that spawn on every landing
     k3 - The x coordinate that this Santa Poop will spawn on
   Example usage:
-    5 2 256  (Very normal movement down the center)
-    5 -4 256 (Moves upwards during a jump, stays on the screen for a longer time)
+    2 5 256  (Very normal movement down the center)
+    -4 5 256 (Moves upwards during a jump, stays on the screen for a longer time)
 
 102
   This is a blood droplet. It is not recommended to use this enemy directly.
