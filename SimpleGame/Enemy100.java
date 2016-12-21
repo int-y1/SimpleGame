@@ -45,7 +45,7 @@ public class Enemy100 extends Enemy
             kill();
         }
         
-        if (outOfBounds(50)) {
+        if (outOfBounds(100)) {
             // out of bounds
             killFast();
         }

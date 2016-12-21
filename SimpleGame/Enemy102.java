@@ -34,13 +34,14 @@ public class Enemy102 extends Enemy
         // movement only
         move(vx, vy);
         
+        // check hitboxes
         if (game.getPlayerDist(getX(), getY()) <= enemySize) {
             // hit player
             game.playerLoseLife();
             kill();
         }
         
-        if (outOfBounds(20)) {
+        if (outOfBounds(100)) {
             // out of bounds
             killFast();
         }

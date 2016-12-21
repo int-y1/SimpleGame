@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=g\ px\ py\ vx\ vy
+comment0.target=Enemy102b(Game,\ int,\ int,\ double,\ double)
+comment1.params=
+comment1.target=void\ dying()
+comment2.params=
+comment2.target=void\ alive()
+numComments=3
