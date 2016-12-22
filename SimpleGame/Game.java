@@ -17,7 +17,7 @@ import java.io.IOException;
 public class Game extends World
 {
     
-    private final int MAX_LEVEL = 2;
+    private final int MAX_LEVEL = 3;
     private final String LEVEL_PATH= "/levels/level%d.txt";
     
     private final int LEVEL;

@@ -58,3 +58,13 @@ ID values supported
   Example usage:
     256 522 0 -2 (Droplet spawns at the bottom edge and moves up the center)
 	-10 -10 2 2  (Droplet spawns at top-left corner and moves diagonally towards the center)
+
+103
+  This is a nerve ending. This version shoots bullets all at once, periodically.
+  k = 4
+    k1 - the bullet's speed
+    k2 - number of bullets every period
+    k3 - length of a period, in frames
+    k4 - x coordinate of the spawn
+  Example usage:
+    2 12 90 256 (regular nerve ending down the middle, looks generic)
