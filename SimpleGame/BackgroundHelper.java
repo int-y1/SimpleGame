@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 /**
- * Maintains the background and updates info about the player's progress.
+ * Maintains the background.
  * 
  * @author Jason Yuen
  * @version a0.01
@@ -29,11 +29,6 @@ public class BackgroundHelper
     private DisplayerMiddle wallBegin;
     private DisplayerMiddle wallEnd;
     private BackgroundFade bTint;
-    
-    // level display variables
-    private int score=0;
-    private int lives=3;
-    private DisplayerTop exitButton;
     
     /**
      * Constructor for objects of class BackgroundHelper
@@ -73,10 +68,6 @@ public class BackgroundHelper
         // initialize the background tint
         bTint = new BackgroundFade();
         game.addObject(bTint, 256, 256);
-        
-        // initialize the level display
-        exitButton = new DisplayerTop("Isaac/death3.png");
-        game.addObject(exitButton, 18, 14);
     }
     
     /**
@@ -129,9 +120,5 @@ public class BackgroundHelper
     public void fadeScreen(int alpha)
     {
         bTint.changeFade(alpha);
-    }
-    
-    public boolean hitExit() {
-        return Greenfoot.mouseClicked(exitButton);
     }
 }

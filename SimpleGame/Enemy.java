@@ -35,7 +35,7 @@ public class Enemy extends Actor
         if (getX() < -tolerance)    return true;
         if (getX() > 512+tolerance) return true;
         if (getY() < -tolerance)    return true;
-        if (getY() > 512+tolerance) return true;
+        if (getY() > 496+tolerance) return true;
         
         // this object is within bounds
         return false;

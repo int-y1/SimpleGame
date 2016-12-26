@@ -52,7 +52,7 @@ public class Player extends Actor
         if (newX<32)  newX=32;
         if (newX>480) newX=480;
         if (newY<32)  newY=32;
-        if (newY>480) newY=480;
+        if (newY>464) newY=464;
         
         setLocation(newX, newY);
     }

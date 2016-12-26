@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Enemy110 extends Enemy
 {
     
-    protected int enemySize = 60;
+    protected int enemySize = 55;
     protected int enemySpeed = -10;
     protected int shootSpeed = 2;
     private int jumpFrame = 0;

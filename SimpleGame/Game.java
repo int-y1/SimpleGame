@@ -25,6 +25,7 @@ public class Game extends World
     private final InputInterface USER_INPUT;
     private final LevelReader LR;
     private final BackgroundHelper BH;
+    private final LevelInfoDisplayer LID;
     private boolean bgFading = false;
     
     // player variables
@@ -47,14 +48,14 @@ public class Game extends World
         // set paint order for the game
         // earlier class is drawn on a later class
         setPaintOrder(DisplayerTop.class,
+                      Heart.class,
                       Player.class,
                       BackgroundFade.class,
                       Enemy.class,
                       DisplayerMiddle.class,
                       DisplayerBottom.class);
         
-        // initialize player-related variables
-        USER_INPUT = new InputInterface(replayPath);
+        // initialize player
         player = new Player(this);
         this.addObject(player, 256, 384);
         
@@ -63,11 +64,13 @@ public class Game extends World
         Scanner sc = new Scanner(stream);
         // parse the first line
         String[] tokens = sc.nextLine().split("\\s+");      // first line from Scanner
-        // send Scanner to another class for furtherprocessing
+        // send Scanner to another class for further processing
         LR = new LevelReader(this, sc);
         
-        // add background
+        // initialize remaining helpers
         BH = new BackgroundHelper(this, LEVEL, Integer.parseInt(tokens[0]));
+        USER_INPUT = new InputInterface(replayPath);
+        LID = new LevelInfoDisplayer(this, 3, 0);
         
     }
     
@@ -122,6 +125,7 @@ public class Game extends World
         
         // make the player lose a life
         lives--;
+        LID.setLives(lives);
         
         // check if game over
         if (lives==0) {
@@ -193,7 +197,7 @@ public class Game extends World
         else {
             // player is not dead
             // check exit button
-            if (BH.hitExit()) {
+            if (LID.hitExit()) {
                 // kill the player
                 lives=0;
                 player.setImage("Isaac/death1.png");
