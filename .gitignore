@@ -1,4 +1,5 @@
 SimpleGame/*.ctxt
 SimpleGame/*.class
-SimpleGame/images/Thumbs.db
-SimpleGame/images/Isaac/Thumbs.db
+SimpleGame/images/*.db
+SimpleGame/images/Isaac/*.db
+SimpleGame/levels/level0.txt

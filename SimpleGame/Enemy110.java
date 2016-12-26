@@ -12,10 +12,10 @@ public class Enemy110 extends Enemy
 {
     
     protected int enemySize = 60;
-    protected int enemySpeed = -30;
+    protected int enemySpeed = -10;
     protected int shootSpeed = 2;
     private int jumpFrame = 0;
-    private int jumps = 5;
+    private int jumps = 6;
     private double bulletAccel = 0.002;
     
     public Enemy110(Game g, ArrayList<Integer> info) {
@@ -55,20 +55,20 @@ public class Enemy110 extends Enemy
             jumpFrame++;
             move(0, 1);
         }
-        else if (jumpFrame < 20) {
+        else if (jumpFrame < 40) {
             // set image
             if (jumpFrame == 10) setScaledImage("101santaPoop3.png");
             // do the actual jump
             jumpFrame++;
             move(0, enemySpeed);
         }
-        else if (jumpFrame < 40) {
+        else if (jumpFrame < 60) {
             // set image
-            if (jumpFrame == 20) {
+            if (jumpFrame == 40) {
                 setScaledImage("101santaPoop4.png");
                 
                 // plus some bullets
-                if (jumps > 0) {
+                if (jumps <= 5) {
                     // spawn tears
                     for (int i=-20; i<20; i++) {
                         // get constants
@@ -76,8 +76,8 @@ public class Enemy110 extends Enemy
                         double phase = i*0.3 + jumps*2;
                         
                         // horizontal bullets
-                        new Enemy102c(game, getX()+i*32+16, getY(), bulletAccel/2 * Math.sin(phase), bulletAccel * Math.cos(phase), delayTime);
-                        new Enemy102c(game, getX()+i*32, getY(), -bulletAccel/2 * Math.sin(phase), -bulletAccel * Math.cos(phase), delayTime);
+                        new Enemy102c(game, getX()+i*32+8, getY(), bulletAccel/2 * Math.sin(phase), bulletAccel * Math.cos(phase), delayTime);
+                        new Enemy102c(game, getX()+i*32-8, getY(), -bulletAccel/2 * Math.sin(phase), -bulletAccel * Math.cos(phase), delayTime);
                         // vertical bullets
                         new Enemy102c(game, getX(), getY()+i*32, -bulletAccel/2 * Math.sin(phase), -bulletAccel * Math.cos(phase), delayTime);
                     }

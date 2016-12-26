@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import greenfoot.*;
 import java.awt.Color;
+import java.io.InputStream;
+import java.util.Scanner;
 
 /**
  * Maintains the background and updates info about the player's progress.
@@ -13,6 +15,8 @@ public class BackgroundHelper
     
     private Game game;
     private final int LEVEL;
+    private final String BACKGROUND_FILE_PATH = "levels/backgrounds.txt";
+    private final String mapPrefix;
     
     // background variables
     private int beginningCountdown = 100;   // length of rest at the level's start
@@ -41,18 +45,24 @@ public class BackgroundHelper
         LEVEL=level;
         scrollTime=mapLength;
         
+        // initialize map prefix
+        InputStream stream = getClass().getResourceAsStream(BACKGROUND_FILE_PATH);
+        Scanner sc = new Scanner(stream);
+        for (int i=0; i<level; i++) sc.next();
+        mapPrefix = sc.next().trim();
+        
         // initialize starting wall
-        bgImage = new GreenfootImage(String.format("map%da.png", LEVEL));
+        bgImage = new GreenfootImage(String.format("%sa.png", mapPrefix));
         wallBegin = new DisplayerMiddle(bgImage);
         game.addObject(wallBegin, 256, 512 - wallBegin.getImage().getHeight()/2);
         
         // initialize ending wall
-        bgImage = new GreenfootImage(String.format("map%db.png", LEVEL));
+        bgImage = new GreenfootImage(String.format("%sb.png", mapPrefix));
         wallEnd = new DisplayerMiddle(bgImage);
         game.addObject(wallEnd, 256, wallEnd.getImage().getHeight()/2 - mapLength);
         
         // initialize background displayers
-        bgImage = new GreenfootImage(String.format("map%d.png", LEVEL));
+        bgImage = new GreenfootImage(String.format("%s.png", mapPrefix));
         bgY=bgImage.getHeight();
         bgArray = new DisplayerBottom[(512/bgY)+2];
         for (int i=0; i<bgArray.length; i++) {
