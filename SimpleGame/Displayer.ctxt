@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=Displayer
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Displayer\ here.\r\n\ \r\n\ @author\ Jason\ Yuen\r\n\ @version\ a0.01\r\n
-comment1.params=dx\ dy
-comment1.target=void\ move(int,\ int)
-comment1.text=\r\n\ Move\ the\ image.\r\n
-numComments=2
