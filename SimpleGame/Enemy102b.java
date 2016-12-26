@@ -14,9 +14,8 @@ public class Enemy102b extends Enemy
     protected int enemySize = 20;
     private double vx;
     private double vy;
-    
-    private double offx;
-    private double offy;
+    private double dx = 0.0;
+    private double dy = 0.0;
     
     public Enemy102b(Game g, int px, int py, double vx, double vy) {
         // initialize
@@ -36,24 +35,24 @@ public class Enemy102b extends Enemy
     protected void alive() {
         // movement only
         // do x movement
-        offx += vx;
-        while (offx>=1.0) {
+        dx += vx;
+        while (dx>=1.0) {
             move(1, 0);
-            offx-=1.0;
+            dx-=1.0;
         }
-        while (offx<=-1.0) {
+        while (dx<=-1.0) {
             move(-1, 0);
-            offx+=1.0;
+            dx+=1.0;
         }
         // do y movement
-        offy += vy;
-        while (offy>=1.0) {
+        dy += vy;
+        while (dy>=1.0) {
             move(0, 1);
-            offy-=1.0;
+            dy-=1.0;
         }
-        while (offy<=-1.0) {
+        while (dy<=-1.0) {
             move(0, -1);
-            offy+=1.0;
+            dy+=1.0;
         }
         
         // check hitboxes

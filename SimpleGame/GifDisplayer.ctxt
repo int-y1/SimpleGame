@@ -1,8 +1,10 @@
 #BlueJ class context
-comment0.params=imagePath
-comment0.target=GifDisplayer(java.lang.String)
-comment0.text=\r\n\ Initialize\ the\ displayer's\ image.\r\n\ The\ given\ String\ is\ the\ path\ to\ a\ gif.\r\n
-comment1.params=
-comment1.target=void\ act()
-comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ Enemy\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
-numComments=2
+comment0.target=GifDisplayer
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ GifDisplayer\ here.\r\n\ \r\n\ @author\ Jason\ Yuen\r\n\ @version\ a0.01\r\n
+comment1.params=imagePath
+comment1.target=GifDisplayer(java.lang.String)
+comment1.text=\r\n\ Initialize\ the\ displayer's\ image.\r\n\ The\ given\ String\ is\ the\ path\ to\ a\ gif.\r\n
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\r\n\ Act\ -\ do\ whatever\ the\ Enemy\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
+numComments=3

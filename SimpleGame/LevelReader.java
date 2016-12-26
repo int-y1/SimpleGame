@@ -78,6 +78,9 @@ public class LevelReader
                 case 103:
                     new Enemy103(game, al);
                     break;
+                case 110:
+                    new Enemy110(game, al);
+                    break;
                 default:
                     System.out.printf("Ignored unrecognized event ID %d\n", id);
             }
