@@ -22,13 +22,16 @@ public class BackgroundHelper
     private int beginningCountdown = 100;   // length of rest at the level's start
     private int scrollTime;
     private int bgY;
-    private int movements=0;
+    private int movements = 0;
     
-    private GreenfootImage bgImage;         // temporary image
     private DisplayerBottom[] bgArray;
     private DisplayerMiddle wallBegin;
     private DisplayerMiddle wallEnd;
     private BackgroundFade bTint;
+    
+    // door variable
+    private DisplayerMiddle endDoor;
+    private boolean doorOpen = false;
     
     /**
      * Constructor for objects of class BackgroundHelper
@@ -39,6 +42,7 @@ public class BackgroundHelper
         game=g;
         LEVEL=level;
         scrollTime=mapLength;
+        GreenfootImage tempImage;   // temporary image
         
         // initialize map prefix
         InputStream stream = getClass().getResourceAsStream(BACKGROUND_FILE_PATH);
@@ -47,27 +51,32 @@ public class BackgroundHelper
         mapPrefix = sc.next().trim();
         
         // initialize starting wall
-        bgImage = new GreenfootImage(String.format("%sa.png", mapPrefix));
-        wallBegin = new DisplayerMiddle(bgImage);
+        tempImage = new GreenfootImage(String.format("%sa.png", mapPrefix));
+        wallBegin = new DisplayerMiddle(tempImage);
         game.addObject(wallBegin, 256, 512 - wallBegin.getImage().getHeight()/2);
         
         // initialize ending wall
-        bgImage = new GreenfootImage(String.format("%sb.png", mapPrefix));
-        wallEnd = new DisplayerMiddle(bgImage);
+        tempImage = new GreenfootImage(String.format("%sb.png", mapPrefix));
+        wallEnd = new DisplayerMiddle(tempImage);
         game.addObject(wallEnd, 256, wallEnd.getImage().getHeight()/2 - mapLength);
         
         // initialize background displayers
-        bgImage = new GreenfootImage(String.format("%s.png", mapPrefix));
-        bgY=bgImage.getHeight();
+        tempImage = new GreenfootImage(String.format("%s.png", mapPrefix));
+        bgY=tempImage.getHeight();
         bgArray = new DisplayerBottom[(512/bgY)+2];
         for (int i=0; i<bgArray.length; i++) {
-            bgArray[i] = new DisplayerBottom(bgImage);
+            bgArray[i] = new DisplayerBottom(tempImage);
             game.addObject(bgArray[i], 256, bgY*(i-1));
         }
         
         // initialize the background tint
         bTint = new BackgroundFade();
         game.addObject(bTint, 256, 256);
+        
+        // initialize the door
+        tempImage = new GreenfootImage(String.format("%sc.png", mapPrefix));
+        endDoor = new DisplayerMiddle(tempImage);
+        game.addObject(endDoor, 256, endDoor.getImage().getHeight()/4 - mapLength);
     }
     
     /**
@@ -88,18 +97,19 @@ public class BackgroundHelper
         }
         scrollTime--;
         
-        
         // have the shift background a little
-        // move walls
+        // move walls and door
         wallBegin.move(0,1);
         wallEnd.move(0,1);
+        endDoor.move(0,1);
         
         // move the background a little down
         for (int i=0; i<bgArray.length; i++) {
             bgArray[i].move(0,1);
         }
         
-        // check if enough movements have occured
+        // check if enough movements have occurred
+        // so background tiles don't run out
         movements++;
         if (movements == bgY) {
             // move the background to its original place
@@ -108,10 +118,33 @@ public class BackgroundHelper
             }
             movements=0;
         }
+        
+        // check if level has just stopped scrolling
+        if (atLevelEnd()) {
+            // open the door now
+            openDoor();
+        }
     }
     
     public boolean atLevelEnd() {
         return scrollTime==0;
+    }
+    
+    public void openDoor() {
+        // door should open once at the end
+        if (!atLevelEnd() || doorOpen) {
+            return;
+        }
+        
+        // set the image
+        endDoor.setImage(String.format("%sd.png", mapPrefix));
+        
+        // set the variable
+        doorOpen = true;
+    }
+    
+    public boolean isDoorOpen() {
+        return doorOpen;
     }
     
     /**

@@ -11,10 +11,10 @@ public class Title extends World
 {
     
     private final boolean DEBUG = true;
-    private final String DEBUG_BUTTON_PATH = "Closed Door.png";
+    private final String DEBUG_BUTTON_PATH = "map0c.png";
     private DisplayerTop debugPlayButton;
     
-    private final String PLAY_BUTTON_PATH = "Closed Door.png";
+    private final String PLAY_BUTTON_PATH = "map0c.png";
     private final String TITLE_IMAGE_PATH = "TitleScreen.gif";
     
     private DisplayerTop playButton;

@@ -206,7 +206,7 @@ public class Game extends World
             }
             
             // check if level is done
-            if (BH.atLevelEnd()) {
+            if (BH.isDoorOpen()) {
                 // check if player is at the end
                 if (256-32 <= player.getX() && player.getX() <= 256+32) {
                     if (player.getY() == 32) {
