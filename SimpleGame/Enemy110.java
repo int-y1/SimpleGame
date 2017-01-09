@@ -11,12 +11,14 @@ import java.util.Arrays;
 public class Enemy110 extends Enemy
 {
     
-    protected int enemySize = 55;
     protected int enemySpeed = -10;
     protected int shootSpeed = 2;
     private int jumpFrame = 0;
-    private int jumps = 6;
+    private int jumps = 8;
     private double bulletAccel = 0.002;
+    
+    private double enemyScale = 1.0+jumps*0.1;
+    protected int enemySize = 30+jumps*3;
     
     public Enemy110(Game g, ArrayList<Integer> info) {
         // initialize
@@ -35,8 +37,14 @@ public class Enemy110 extends Enemy
         // set image first
         setImage(imageFile);
         // double the image size
-        getImage().scale(getImage().getWidth()*2, getImage().getHeight()*2);
+        getImage().scale((int)(getImage().getWidth()*enemyScale), (int)(getImage().getHeight()*enemyScale));
         //setImage(getImage());
+    }
+    
+    private void lowerScale() {
+        // change scaling and hitbox size
+        enemyScale-=0.1;
+        enemySize-=3;
     }
     
     protected void alive() {
@@ -63,24 +71,35 @@ public class Enemy110 extends Enemy
             move(0, enemySpeed);
         }
         else if (jumpFrame < 60) {
-            // set image
             if (jumpFrame == 40) {
+                // set image
+                lowerScale();
                 setScaledImage("101santaPoop4.png");
                 
-                // plus some bullets
-                if (jumps <= 5) {
-                    // spawn tears
-                    for (int i=-20; i<20; i++) {
-                        // get constants
-                        int delayTime = Math.abs(i*8);
-                        double phase = i*0.3 + jumps*2;
-                        
-                        // horizontal bullets
-                        new Enemy102c(game, getX()+i*32+8, getY(), bulletAccel/2 * Math.sin(phase), bulletAccel * Math.cos(phase), delayTime);
-                        new Enemy102c(game, getX()+i*32-8, getY(), -bulletAccel/2 * Math.sin(phase), -bulletAccel * Math.cos(phase), delayTime);
-                        // vertical bullets
-                        new Enemy102c(game, getX(), getY()+i*32, -bulletAccel/2 * Math.sin(phase), -bulletAccel * Math.cos(phase), delayTime);
-                    }
+                // plus, spawn some tears
+                for (int i=-20; i<20; i++) {
+                    // get constants
+                    int delayTime = Math.abs(i*8);
+                    double phase = i*0.3 + jumps*5;
+                    
+                    // horizontal bullets
+                    new Enemy102c(game, getX()+i*32+8, getY(), bulletAccel/2 * Math.sin(phase), bulletAccel * Math.cos(phase), delayTime);
+                    new Enemy102c(game, getX()+i*32-8, getY(), -bulletAccel/2 * Math.sin(phase), -bulletAccel * Math.cos(phase), delayTime);
+                    // vertical bullets
+                    new Enemy102c(game, getX(), getY()+i*32, -bulletAccel/2 * Math.sin(phase), -bulletAccel * Math.cos(phase), delayTime);
+                }
+                
+                // replace the boss if there are no jumps left
+                if (jumps==0) {
+                    // make a santa poop at this location
+                    ArrayList<Integer> temp = new ArrayList<Integer>();
+                    temp.add(3);
+                    temp.add(2);
+                    temp.add(256);
+                    Enemy101 tempEnemy = new Enemy101(game, temp);
+                    tempEnemy.setLocation(getX(), getY());
+                    killFast();
+                    return;
                 }
             }
             // do nothing
