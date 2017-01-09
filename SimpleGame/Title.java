@@ -102,6 +102,8 @@ public class Title extends World
         
         // exit button
         if (Greenfoot.mouseClicked(exitButton)) {
+            // close the game
+            System.exit(0);
         }
         
         // debug button

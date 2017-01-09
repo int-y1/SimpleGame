@@ -36,19 +36,14 @@ public class BackgroundHelper
     /**
      * Constructor for objects of class BackgroundHelper
      */
-    public BackgroundHelper(Game g, int level, int mapLength)
+    public BackgroundHelper(Game g, int level, int mapLength, String mapPrefix)
     {
         // initialize
         game=g;
         LEVEL=level;
         scrollTime=mapLength;
+        this.mapPrefix = mapPrefix;
         GreenfootImage tempImage;   // temporary image
-        
-        // initialize map prefix
-        InputStream stream = getClass().getResourceAsStream(BACKGROUND_FILE_PATH);
-        Scanner sc = new Scanner(stream);
-        for (int i=0; i<level; i++) sc.next();
-        mapPrefix = sc.next().trim();
         
         // initialize starting wall
         tempImage = new GreenfootImage(String.format("%sa.png", mapPrefix));
