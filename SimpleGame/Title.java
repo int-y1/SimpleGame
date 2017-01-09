@@ -15,7 +15,7 @@ public class Title extends World
     private DisplayerTop debugPlayButton;
     
     private final String PLAY_BUTTON_PATH = "map0c.png";
-    private final String TITLE_IMAGE_PATH = "TitleScreen.gif";
+    private final String BG_IMAGE_PATH = "TitleScreen.gif";
     
     private DisplayerTop playButton;
     private DisplayerTop optionsButton;
@@ -37,7 +37,7 @@ public class Title extends World
                       GifDisplayer.class);
         
         // make the background
-        addObject(new GifDisplayer(TITLE_IMAGE_PATH), 256, 256);
+        addObject(new GifDisplayer(BG_IMAGE_PATH), 256, 256);
         
         // make the buttons
         GreenfootImage temp;
@@ -94,6 +94,7 @@ public class Title extends World
         
         // options button
         if (Greenfoot.mouseClicked(optionsButton)) {
+            Greenfoot.setWorld(new Options());
         }
         
         // credits button
