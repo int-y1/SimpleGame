@@ -30,7 +30,7 @@ public class Game extends World
     
     // player variables
     private Player player;
-    private int lives = 3;
+    private int lives;
     private final int FADE_DURATION = 200;      // duration of any fading animation
     private int fadeAnimation=FADE_DURATION;
     
@@ -39,7 +39,7 @@ public class Game extends World
      * This method is used for playing a level.
      * 
      */
-    public Game(int levelNumber, String replayPath) throws IOException
+    public Game(int levelNumber, int lives, String replayPath) throws IOException
     {
         // screen size is 512x512 pixels
         super(512, 512, 1, false);
@@ -58,6 +58,7 @@ public class Game extends World
         // initialize player
         player = new Player(this);
         this.addObject(player, 256, 384);
+        this.lives = lives;
         
         // get the level file into a Scanner
         InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, levelNumber));
@@ -70,7 +71,7 @@ public class Game extends World
         // initialize remaining helpers
         BH = new BackgroundHelper(this, LEVEL, Integer.parseInt(tokens[0]), tokens[1]);
         USER_INPUT = new InputInterface(replayPath);
-        LID = new LevelInfoDisplayer(this, 3, 0);
+        LID = new LevelInfoDisplayer(this, lives, 0);
         
     }
     
@@ -164,7 +165,7 @@ public class Game extends World
                 else {
                     // player advances to a new level
                     try {
-                        Greenfoot.setWorld(new Game(LEVEL+1, null));
+                        Greenfoot.setWorld(new Game(LEVEL+1, lives+1, null));
                     }
                     catch (IOException e) {
                         Greenfoot.setWorld(new Title());

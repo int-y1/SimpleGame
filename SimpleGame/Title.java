@@ -85,7 +85,7 @@ public class Title extends World
         // play button
         if (Greenfoot.mouseClicked(playButton)) {
             try {
-                Greenfoot.setWorld(new Game(1, null));
+                Greenfoot.setWorld(new Game(1, 2, null));
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -109,7 +109,7 @@ public class Title extends World
         // debug button
         if (DEBUG && Greenfoot.mouseClicked(debugPlayButton)) {
             try {
-                Greenfoot.setWorld(new Game(0, null));
+                Greenfoot.setWorld(new Game(0, 10, null));
             }
             catch (Exception e) {
                 e.printStackTrace();
