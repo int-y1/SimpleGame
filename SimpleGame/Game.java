@@ -17,7 +17,8 @@ import java.io.IOException;
 public class Game extends World
 {
     
-    private final int MAX_LEVEL = 6;
+    private final int MAX_LEVEL = 8;
+    private final int MAX_LIVES = 10;
     private final String LEVEL_PATH= "/levels/level%d.txt";
     
     private final int LEVEL;
@@ -58,6 +59,7 @@ public class Game extends World
         // initialize player
         player = new Player(this);
         this.addObject(player, 256, 384);
+        if (lives > MAX_LIVES) lives = MAX_LIVES;
         this.lives = lives;
         
         // get the level file into a Scanner
@@ -71,7 +73,7 @@ public class Game extends World
         // initialize remaining helpers
         BH = new BackgroundHelper(this, LEVEL, Integer.parseInt(tokens[0]), tokens[1]);
         USER_INPUT = new InputInterface(replayPath);
-        LID = new LevelInfoDisplayer(this, lives, 0);
+        LID = new LevelInfoDisplayer(this, lives, MAX_LIVES, 0);
         
     }
     

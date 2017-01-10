@@ -16,18 +16,22 @@ public class LevelInfoDisplayer
     private Game game;
     
     // level display variables
-    private final int HEART_COUNT = 5;
-    private Heart[] hearts = new Heart[HEART_COUNT];
+    private final int HEART_COUNT;
+    private Heart[] hearts;
     private int score = 0;
     private DisplayerTop exitButton;
     
     /**
      * Constructor for objects of class LevelInfoDisplayer
      */
-    public LevelInfoDisplayer(Game g, int lives, int score)
+    public LevelInfoDisplayer(Game g, int lives, int maxLives, int score)
     {
         // initialize variables
         game=g;
+        
+        // initialize lives info
+        HEART_COUNT = (maxLives+1)/2;
+        hearts = new Heart[HEART_COUNT];
         for (int i=0; i<HEART_COUNT; i++) {
             hearts[i] = new Heart();
             game.addObject(hearts[i], 16 + i*32, 496);
