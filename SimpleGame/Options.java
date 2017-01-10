@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.io.IOException;
+import java.awt.Color;
 
 /**
  * Write a description of class Options here.
@@ -16,8 +17,9 @@ public class Options extends World
     private DisplayerTop leftButton;
     private DisplayerTop rightButton;
     private DisplayerTop playButton;
+    private DisplayerTop levelDisplay;
     
-    private final int MAX_LEVEL=6;
+    private final int MAX_LEVEL=8;
     private int levelSelect=1;
     
     /**
@@ -49,6 +51,18 @@ public class Options extends World
         // make the play button
         playButton = new DisplayerTop("100flies1.png");
         addObject(playButton,256,128);
+        
+        // make the level display
+        levelDisplay = new DisplayerTop("nothing.png");
+        addObject(levelDisplay,256,256);
+        updateLevelDisplay();
+    }
+    
+    private void updateLevelDisplay()
+    {
+        // make the GreenfootImage
+        GreenfootImage tempImage = new GreenfootImage(String.format("Level: %d",levelSelect), 32, Color.BLACK, new Color(0,0,0,0));
+        levelDisplay.setImage(tempImage);
     }
     
     private void levelDecrease()
@@ -56,6 +70,7 @@ public class Options extends World
         if (levelSelect > 1) {
             // possible to decrease level number
             levelSelect--;
+            updateLevelDisplay();
         }
     }
     
@@ -64,6 +79,7 @@ public class Options extends World
         if (levelSelect < MAX_LEVEL) {
             // possible to increase level number
             levelSelect++;
+            updateLevelDisplay();
         }
     }
     
