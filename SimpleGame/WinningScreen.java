@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class WinningScreen here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jason Yuen
+ * @version a0.1
  */
 public class WinningScreen extends World
 {

@@ -17,7 +17,6 @@ import java.io.IOException;
 public class Game extends World
 {
     
-    private final int MAX_LEVEL = 8;
     private final int MAX_LIVES = 10;
     private final String LEVEL_PATH= "/levels/level%d.txt";
     
@@ -56,14 +55,23 @@ public class Game extends World
                       DisplayerMiddle.class,
                       DisplayerBottom.class);
         
-        // initialize player
-        player = new Player(this);
-        this.addObject(player, 256, 384);
-        if (lives > MAX_LIVES) lives = MAX_LIVES;
-        this.lives = lives;
-        
         // get the level file into a Scanner
         InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, levelNumber));
+        if (stream == null) {
+            // level does not exist
+            // player completed the game
+            Greenfoot.setWorld(new WinningScreen());
+            // set remaining variables to null
+            LR = null;
+            BH = null;
+            USER_INPUT = null;
+            LID = null;
+            player = null;
+            return;
+        }
+        else {
+            // check highest level reached
+        }
         Scanner sc = new Scanner(stream);
         // parse the first line
         String[] tokens = sc.nextLine().split("\\s+");      // first line from Scanner
@@ -74,6 +82,12 @@ public class Game extends World
         BH = new BackgroundHelper(this, LEVEL, Integer.parseInt(tokens[0]), tokens[1]);
         USER_INPUT = new InputInterface(replayPath);
         LID = new LevelInfoDisplayer(this, lives, MAX_LIVES, 0);
+        
+        // initialize player
+        player = new Player(this);
+        this.addObject(player, 256, 384);
+        if (lives > MAX_LIVES) lives = MAX_LIVES;
+        this.lives = lives;
         
     }
     
@@ -153,16 +167,17 @@ public class Game extends World
     
     public void act()
     {
+        // stop game if player is not initialized
+        if (player == null) {
+            return;
+        }
+        
         if (bgFading) {
             // check if animation is done
             if (fadeAnimation == 0) {
                 if (playerDead() || USER_INPUT.isReplay()) {
                     // player goes back to the title screen
                     Greenfoot.setWorld(new Title());
-                }
-                else if (LEVEL == MAX_LEVEL) {
-                    // player completed the game
-                    Greenfoot.setWorld(new WinningScreen());
                 }
                 else {
                     // player advances to a new level

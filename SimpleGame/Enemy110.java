@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Write a description of class Enemy110 here.
  * 
  * @author Jason Yuen
- * @version a0.01
+ * @version a0.1
  */
 public class Enemy110 extends Enemy
 {

@@ -13,7 +13,7 @@ import java.io.IOException;
  * It is up to the other classes to declare this object as private.
  * 
  * @author Jason Yuen
- * @version a0.01
+ * @version a0.1
  */
 public class InputInterface
 {

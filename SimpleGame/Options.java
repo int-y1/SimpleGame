@@ -5,12 +5,13 @@ import java.awt.Color;
 /**
  * Write a description of class Options here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jason Yuen
+ * @version a0.1
  */
 public class Options extends World
 {
     
+    private final boolean DEBUG;
     private final String BG_IMAGE_PATH = "TitleScreen.gif";
     
     private DisplayerTop backButton;
@@ -26,10 +27,11 @@ public class Options extends World
      * Constructor for objects of class Options.
      * 
      */
-    public Options()
+    public Options(boolean debug)
     {
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
+        DEBUG = debug;
         
         // set paint order for the title screen
         // earlier class is drawn on a later class
@@ -76,7 +78,7 @@ public class Options extends World
     
     private void levelIncrease()
     {
-        if (levelSelect < MAX_LEVEL) {
+        if (levelSelect < MAX_LEVEL || DEBUG) {
             // possible to increase level number
             levelSelect++;
             updateLevelDisplay();

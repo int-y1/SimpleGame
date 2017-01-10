@@ -5,7 +5,7 @@ import java.awt.Color;
  * Write a description of class Title here.
  * 
  * @author Jason Yuen
- * @version a0.01
+ * @version a0.1
  */
 public class Title extends World
 {
@@ -94,7 +94,7 @@ public class Title extends World
         
         // options button
         if (Greenfoot.mouseClicked(optionsButton)) {
-            Greenfoot.setWorld(new Options());
+            Greenfoot.setWorld(new Options(DEBUG));
         }
         
         // credits button

@@ -4,7 +4,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * Write a description of class Player here.
  * 
  * @author Jason Yuen
- * @version a0.01
+ * @version a0.1
  */
 public class Player extends Actor
 {

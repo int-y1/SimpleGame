@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Updates info about the player's progress.
  * 
  * @author Jason Yuen
- * @version a0.01
+ * @version a0.1
  */
 public class LevelInfoDisplayer  
 {
