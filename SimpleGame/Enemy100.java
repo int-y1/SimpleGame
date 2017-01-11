@@ -13,14 +13,14 @@ public class Enemy100 extends Enemy
     protected int enemySize = 20;
     protected int enemySpeed;
     
-    public Enemy100(Game g, ArrayList<Integer> info) {
+    public Enemy100(Game g, ArrayList<String> info) {
         // initialize
         game = g;
         deadAnimation = 16;
-        enemySpeed = info.get(0);
+        enemySpeed = Integer.parseInt(info.get(0));
         
         // add this actor
-        game.addObject(this, info.get(1), -20);
+        game.addObject(this, Integer.parseInt(info.get(1)), -20);
     }
     
     protected void dying() {

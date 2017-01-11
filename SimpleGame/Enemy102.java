@@ -15,15 +15,15 @@ public class Enemy102 extends Enemy
     private int vx;
     private int vy;
     
-    public Enemy102(Game g, ArrayList<Integer> info) {
+    public Enemy102(Game g, ArrayList<String> info) {
         // initialize
         game = g;
         deadAnimation = 1;
-        vx = info.get(2);
-        vy = info.get(3);
+        vx = Integer.parseInt(info.get(2));
+        vy = Integer.parseInt(info.get(3));
         
         // add this actor
-        game.addObject(this, info.get(0), info.get(1));
+        game.addObject(this, Integer.parseInt(info.get(0)), Integer.parseInt(info.get(1)));
     }
     
     protected void dying() {

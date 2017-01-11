@@ -20,7 +20,7 @@ public class Enemy110 extends Enemy
     private double enemyScale = 1.0+jumps*0.1;
     protected int enemySize = 30+jumps*3;
     
-    public Enemy110(Game g, ArrayList<Integer> info) {
+    public Enemy110(Game g, ArrayList<String> info) {
         // initialize
         game = g;
         deadAnimation = 1;
@@ -92,11 +92,7 @@ public class Enemy110 extends Enemy
                 // replace the boss if there are no jumps left
                 if (jumps==0) {
                     // make a santa poop at this location
-                    ArrayList<Integer> temp = new ArrayList<Integer>();
-                    temp.add(3);
-                    temp.add(2);
-                    temp.add(256);
-                    Enemy101 tempEnemy = new Enemy101(game, temp);
+                    Enemy101 tempEnemy = new Enemy101(game, makeArrayList(new int[]{3,2,256}));
                     tempEnemy.setLocation(getX(), getY());
                     killFast();
                     return;

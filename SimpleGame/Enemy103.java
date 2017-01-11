@@ -15,16 +15,16 @@ public class Enemy103 extends Enemy
     protected int shootCount;
     protected int shootPeriod;
     
-    public Enemy103(Game g, ArrayList<Integer> info) {
+    public Enemy103(Game g, ArrayList<String> info) {
         // initialize
         game = g;
         deadAnimation = 1;
-        shootSpeed = info.get(0);
-        shootCount = info.get(1);
-        shootPeriod = info.get(2);
+        shootSpeed = Integer.parseInt(info.get(0));
+        shootCount = Integer.parseInt(info.get(1));
+        shootPeriod = Integer.parseInt(info.get(2));
         
         // add this actor
-        game.addObject(this, info.get(3), -30);
+        game.addObject(this, Integer.parseInt(info.get(3)), -30);
     }
     
     protected void dying() {

@@ -15,15 +15,15 @@ public class Enemy101 extends Enemy
     protected int enemySpeed;
     protected int shootSpeed;
     
-    public Enemy101(Game g, ArrayList<Integer> info) {
+    public Enemy101(Game g, ArrayList<String> info) {
         // initialize
         game = g;
         deadAnimation = 25;
-        enemySpeed = info.get(0);
-        shootSpeed = info.get(1);
+        enemySpeed = Integer.parseInt(info.get(0));
+        shootSpeed = Integer.parseInt(info.get(1));
         
         // add this actor
-        game.addObject(this, info.get(2), -20);
+        game.addObject(this, Integer.parseInt(info.get(2)), -20);
     }
     
     protected void dying() {
@@ -55,10 +55,10 @@ public class Enemy101 extends Enemy
             
             if (timer%70 == 50) {
                 // spawn tears
-                new Enemy102(game, new ArrayList<Integer> (Arrays.asList(getX(), getY(), 0, shootSpeed)));
-                new Enemy102(game, new ArrayList<Integer> (Arrays.asList(getX(), getY(), 0, -shootSpeed)));
-                new Enemy102(game, new ArrayList<Integer> (Arrays.asList(getX(), getY(), shootSpeed, 0)));
-                new Enemy102(game, new ArrayList<Integer> (Arrays.asList(getX(), getY(), -shootSpeed, 0)));
+                new Enemy102(game, makeArrayList(new int[]{getX(), getY(), 0, shootSpeed}));
+                new Enemy102(game, makeArrayList(new int[]{getX(), getY(), 0, -shootSpeed}));
+                new Enemy102(game, makeArrayList(new int[]{getX(), getY(), shootSpeed, 0}));
+                new Enemy102(game, makeArrayList(new int[]{getX(), getY(), -shootSpeed, 0}));
             }
         }
         

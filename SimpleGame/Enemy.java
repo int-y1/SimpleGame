@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class Enemy here.
@@ -39,6 +40,13 @@ public class Enemy extends Actor
         
         // this object is within bounds
         return false;
+    }
+    
+    protected ArrayList<String> makeArrayList(int[] arr)
+    {
+        ArrayList<String> al = new ArrayList<String>();
+        for (int i : arr) al.add(Integer.toString(i));
+        return al;
     }
     
     protected void dying() {

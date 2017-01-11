@@ -20,7 +20,7 @@ public class LevelReader
     
     private Queue<Integer> eventTime = new LinkedList<Integer>();
     private Queue<Integer> eventID = new LinkedList<Integer>();
-    private Queue<ArrayList<Integer> > eventInfo = new LinkedList<ArrayList<Integer> >();
+    private Queue<ArrayList<String> > eventInfo = new LinkedList<ArrayList<String> >();
     
     /**
      * Constructor for objects of class LevelReader.
@@ -39,10 +39,10 @@ public class LevelReader
             
             // do ArrayList info
             int listLength = sc.nextInt();
-            ArrayList<Integer> al = new ArrayList<Integer>();
+            ArrayList<String> al = new ArrayList<String>();
             // add in the ArrayList elements
             for (int i=0; i<listLength; i++) {
-                al.add(sc.nextInt());
+                al.add(sc.next());
             }
             // done creation
             eventInfo.offer(al);
@@ -62,7 +62,7 @@ public class LevelReader
             // get event info
             eventTime.poll();
             int id = eventID.poll();
-            ArrayList<Integer> al = eventInfo.poll();
+            ArrayList<String> al = eventInfo.poll();
             
             // do the appropriate action
             switch (id) {
