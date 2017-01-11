@@ -12,6 +12,8 @@ public class Player extends Actor
     private final int SPEED_NORMAL = 5;
     private final int SPEED_SLOW = 2;
     private final int INVINCIBILITY_FRAMES = 50;
+    private int vx = 0;                             // x velocity of the player
+    private int vy = 0;                             // y velocity of the player
     protected Game game;
     
     public Player(Game g)
@@ -73,25 +75,26 @@ public class Player extends Actor
         if (game.keyS()) moveSpeed = SPEED_SLOW;
         else moveSpeed = SPEED_NORMAL;
         
-        // read the left/right keys
+        // calculate vx from left/right keys
+        vx = 0;
         if (game.keyLeft()) {
-            if (!game.keyRight()) {
-                displacePlayer(-moveSpeed, 0);
-            }
+            vx -= moveSpeed;
         }
-        else if (game.keyRight()) {
-            displacePlayer(moveSpeed, 0);
+        if (game.keyRight()) {
+            vx += moveSpeed;
         }
         
-        // read the up/down keys
+        // calculate vy from up/down keys
+        vy = 0;
         if (game.keyUp()) {
-            if (!game.keyDown()) {
-                displacePlayer(0, -moveSpeed);
-            }
+            vy -= moveSpeed;
         }
-        else if (game.keyDown()) {
-            displacePlayer(0, moveSpeed);
+        if (game.keyDown()) {
+            vy += moveSpeed;
         }
+        
+        // do movement
+        displacePlayer(vx, vy);
         
         // invincibility frame transparency
         if (noHitFrames > 0) {
