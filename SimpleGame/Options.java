@@ -63,7 +63,7 @@ public class Options extends World
     private void updateLevelDisplay()
     {
         // make the GreenfootImage
-        GreenfootImage tempImage = new GreenfootImage(String.format("Level: %d",levelSelect), 32, Color.BLACK, new Color(0,0,0,0));
+        GreenfootImage tempImage = new GreenfootImage(String.format("Room: %d",levelSelect), 32, Color.BLACK, new Color(0,0,0,0));
         levelDisplay.setImage(tempImage);
     }
     
