@@ -66,6 +66,9 @@ public class LevelReader
             
             // do the appropriate action
             switch (id) {
+                case 10:
+                    new DisplayerMove(game, al);
+                    break;
                 case 100:
                     new Enemy100(game, al);
                     break;
