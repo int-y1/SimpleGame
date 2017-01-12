@@ -1,6 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.io.IOException;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 
 /**
  * Write a description of class Options here.
@@ -12,7 +14,7 @@ public class Options extends World
 {
     
     private final boolean DEBUG;
-    private final String BG_IMAGE_PATH = "TitleScreen.gif";
+    private final String BG_IMAGE_PATH = "OptionScreen.png";
     
     private DisplayerTop backButton;
     private DisplayerTop leftButton;
@@ -42,68 +44,103 @@ public class Options extends World
         addObject(new GifDisplayer(BG_IMAGE_PATH), 256, 256);
         
         // make buttons
-        // make the back button
-        backButton = new DisplayerTop("100flies1.png");
-        addObject(backButton,64,64);
-        // make the left/right buttons
-        leftButton = new DisplayerTop("100flies1.png");
-        addObject(leftButton,224,128);
-        rightButton = new DisplayerTop("100flies1.png");
-        addObject(rightButton,288,128);
-        // make the play button
-        playButton = new DisplayerTop("100flies1.png");
-        addObject(playButton,256,128);
+        GreenfootImage temp;
         
-        // make the level display
+        // back button
+        temp = new GreenfootImage(90, 120);
+        if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
+        if (DEBUG) temp.fill();
+        backButton = new DisplayerTop(temp);
+        addObject(backButton,45,452);
+        
+        // left button
+        temp = new GreenfootImage(36, 18);
+        if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
+        if (DEBUG) temp.fill();
+        leftButton = new DisplayerTop(temp);
+        addObject(leftButton,182,250);
+        
+        // right button
+        temp = new GreenfootImage(36, 18);
+        if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
+        if (DEBUG) temp.fill();
+        rightButton = new DisplayerTop(temp);
+        addObject(rightButton,342,250);
+        
+        // play button
+        temp = new GreenfootImage(110, 30);
+        if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
+        if (DEBUG) temp.fill();
+        playButton = new DisplayerTop(temp);
+        addObject(playButton,260,250);
+        
+        // level display
         levelDisplay = new DisplayerTop("nothing.png");
-        addObject(levelDisplay,256,256);
+        addObject(levelDisplay,260,225);
         updateLevelDisplay();
     }
     
     private void updateLevelDisplay()
     {
-        // make the GreenfootImage
-        GreenfootImage tempImage = new GreenfootImage(String.format("Room: %d",levelSelect), 32, Color.BLACK, new Color(0,0,0,0));
+        // set up the font
+        Font tempFont = new Font("Comic Sans MS", Font.PLAIN, 40);
+        // set up the GreenfootImage
+        GreenfootImage tempImage = new GreenfootImage(200,100);
+        tempImage.setColor(Color.BLACK);
+        tempImage.setFont(tempFont);
+        
+        // draw centered text
+        // the main challenge is getting a FontMetrics object
+        String str = Integer.toString(levelSelect);
+        int textWidth = tempImage.getAwtImage().getGraphics().getFontMetrics(tempFont).stringWidth(str);
+        tempImage.drawString(str, 100-textWidth/2, 50);
+        
+        // update the image
         levelDisplay.setImage(tempImage);
     }
     
-    private void levelDecrease()
+    private void levelChange(int amount)
     {
-        if (levelSelect > 1) {
-            // possible to decrease level number
-            levelSelect--;
-            updateLevelDisplay();
+        // change the level
+        levelSelect += amount;
+        
+        if (levelSelect < 1) {
+            // level number too low
+            levelSelect = 1;
         }
+        else if (!(levelSelect <= MAX_LEVEL || DEBUG)) {
+            // level number too high
+            levelSelect = MAX_LEVEL;
+        }
+        
+        // update number to screen
+        updateLevelDisplay();
     }
     
-    private void levelIncrease()
-    {
-        if (levelSelect < MAX_LEVEL || DEBUG) {
-            // possible to increase level number
-            levelSelect++;
-            updateLevelDisplay();
-        }
-    }
-    
+    int buttonCooldown = 0;
     /**
      * Act - do whatever the Enemy wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act()
     {
+        if (buttonCooldown > 0) buttonCooldown--;
+        
         // back button
         if (Greenfoot.mouseClicked(backButton)) {
             Greenfoot.setWorld(new Title());
         }
         
         // left button
-        if (Greenfoot.mouseClicked(leftButton)) {
-            levelDecrease();
+        if ((Greenfoot.isKeyDown("left") && buttonCooldown==0) || Greenfoot.mouseClicked(leftButton)) {
+            buttonCooldown=20;
+            levelChange(-1);
         }
         
         // right button
-        if (Greenfoot.mouseClicked(rightButton)) {
-            levelIncrease();
+        if ((Greenfoot.isKeyDown("right") && buttonCooldown==0) || Greenfoot.mouseClicked(rightButton)) {
+            buttonCooldown=20;
+            levelChange(1);
         }
         
         // play button
