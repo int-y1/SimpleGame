@@ -81,6 +81,9 @@ public class LevelReader
                 case 103:
                     new Enemy103(game, al);
                     break;
+                case 104:
+                    new Enemy104(game, al);
+                    break;
                 case 110:
                     new Enemy110(game, al);
                     break;

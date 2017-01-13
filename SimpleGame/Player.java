@@ -43,7 +43,14 @@ public class Player extends Actor
     
     public int getDist(int x, int y)
     {
+        // simple distance formula
         return (int) Math.sqrt(Math.pow(x-getX(), 2) + Math.pow(y-getY(), 2));
+    }
+    
+    public double getAngle(int x, int y)
+    {
+        // return angle from (x,y) to here, in radians
+        return Math.atan2(getY()-y, getX()-x);
     }
     
     public void displacePlayer(int dx, int dy)

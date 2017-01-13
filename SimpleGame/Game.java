@@ -129,8 +129,14 @@ public class Game extends World
     
     public int getPlayerDist(int x, int y)
     {
-        // simple distance formula
+        // send to player
         return player.getDist(x, y);
+    }
+    
+    public double getPlayerAngle(int x, int y)
+    {
+        // send to player
+        return player.getAngle(x, y);
     }
     
     public void playerLoseLife()
