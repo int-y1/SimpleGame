@@ -76,7 +76,7 @@ public class Options extends World
         
         // level display
         levelDisplay = new DisplayerTop("nothing.png");
-        addObject(levelDisplay,260,225);
+        addObject(levelDisplay,260,210);
         updateLevelDisplay();
     }
     
@@ -85,7 +85,7 @@ public class Options extends World
         // set up the font
         Font tempFont = new Font("Comic Sans MS", Font.PLAIN, 40);
         // set up the GreenfootImage
-        GreenfootImage tempImage = new GreenfootImage(200,100);
+        GreenfootImage tempImage = new GreenfootImage(200,32);
         tempImage.setColor(Color.BLACK);
         tempImage.setFont(tempFont);
         
@@ -93,7 +93,7 @@ public class Options extends World
         // the main challenge is getting a FontMetrics object
         String str = Integer.toString(levelSelect);
         int textWidth = tempImage.getAwtImage().getGraphics().getFontMetrics(tempFont).stringWidth(str);
-        tempImage.drawString(str, 100-textWidth/2, 50);
+        tempImage.drawString(str, 100-textWidth/2, 30);
         
         // update the image
         levelDisplay.setImage(tempImage);
@@ -117,29 +117,44 @@ public class Options extends World
         updateLevelDisplay();
     }
     
-    int buttonCooldown = 0;
+    int SCROLL_MAX_COOLDOWN = 15;
+    int scrollCooldown = 0;
     /**
      * Act - do whatever the Enemy wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act()
     {
-        if (buttonCooldown > 0) buttonCooldown--;
-        
         // back button
-        if (Greenfoot.mouseClicked(backButton)) {
+        if (Greenfoot.isKeyDown("escape") || Greenfoot.mouseClicked(backButton)) {
             Greenfoot.setWorld(new Title());
         }
         
+        // do scroll countdown
+        if (scrollCooldown > 0) {
+            if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("right")) {
+                // something is pressed
+                // lower cooldown by one
+                scrollCooldown--;
+            }
+            else {
+                // nothing is pressed
+                // set to zero automatically
+                scrollCooldown = 0;
+            }
+        }
+        
         // left button
-        if ((Greenfoot.isKeyDown("left") && buttonCooldown==0) || Greenfoot.mouseClicked(leftButton)) {
-            buttonCooldown=20;
+        if ((Greenfoot.isKeyDown("left") && scrollCooldown==0) || Greenfoot.mouseClicked(leftButton)) {
+            // do left press
+            scrollCooldown = SCROLL_MAX_COOLDOWN;
             levelChange(-1);
         }
         
         // right button
-        if ((Greenfoot.isKeyDown("right") && buttonCooldown==0) || Greenfoot.mouseClicked(rightButton)) {
-            buttonCooldown=20;
+        if ((Greenfoot.isKeyDown("right") && scrollCooldown==0) || Greenfoot.mouseClicked(rightButton)) {
+            // do right press
+            scrollCooldown = SCROLL_MAX_COOLDOWN;
             levelChange(1);
         }
         
