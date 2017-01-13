@@ -117,11 +117,12 @@ public class Options extends World
         updateLevelDisplay();
     }
     
+    // level scrolling variables
     int SCROLL_MAX_COOLDOWN = 15;
     int scrollCooldown = 0;
+    
     /**
-     * Act - do whatever the Enemy wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Every act, this World reads the user input and responds appropriately.
      */
     public void act()
     {
