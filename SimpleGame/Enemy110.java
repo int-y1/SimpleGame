@@ -94,7 +94,7 @@ public class Enemy110 extends Enemy
                     // make a santa poop at this location
                     Enemy101 tempEnemy = new Enemy101(game, makeArrayList(new int[]{3,2,256}));
                     tempEnemy.setLocation(getX(), getY());
-                    killFast();
+                    removeFast();
                     return;
                 }
             }
@@ -115,7 +115,8 @@ public class Enemy110 extends Enemy
         
         if (outOfBounds(150)) {
             // out of bounds
-            killFast();
+            // shouldn't happen
+            removeFast();
         }
     }
 }

@@ -91,7 +91,7 @@ public class Enemy104 extends Enemy
         
         if (outOfBounds(100)) {
             // out of bounds
-            killFast();
+            removeFast();
         }
     }
 }

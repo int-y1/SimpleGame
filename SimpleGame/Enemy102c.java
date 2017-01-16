@@ -35,7 +35,7 @@ public class Enemy102c extends Enemy
         // plus a sanity check
         if (outOfBounds(200)) {
             // out of bounds
-            killFast();
+            removeFast();
         }
     }
     
@@ -86,7 +86,7 @@ public class Enemy102c extends Enemy
         
         if (outOfBounds(200)) {
             // out of bounds
-            killFast();
+            removeFast();
         }
     }
 }

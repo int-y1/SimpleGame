@@ -14,6 +14,8 @@ public class Player extends Actor
     private final int INVINCIBILITY_FRAMES = 50;
     private int vx = 0;                             // x velocity of the player
     private int vy = 0;                             // y velocity of the player
+    private int SHOOT_COOLDOWN = 20;
+    private int shootTime = 0;
     protected Game game;
     
     public Player(Game g)
@@ -77,11 +79,10 @@ public class Player extends Actor
             return;
         }
         
-        // read movements
+        // calculate player's velocity
         int moveSpeed;
         if (game.keyS()) moveSpeed = SPEED_SLOW;
         else moveSpeed = SPEED_NORMAL;
-        
         // calculate vx from left/right keys
         vx = 0;
         if (game.keyLeft()) {
@@ -90,7 +91,6 @@ public class Player extends Actor
         if (game.keyRight()) {
             vx += moveSpeed;
         }
-        
         // calculate vy from up/down keys
         vy = 0;
         if (game.keyUp()) {
@@ -102,6 +102,14 @@ public class Player extends Actor
         
         // do movement
         displacePlayer(vx, vy);
+        
+        // shooting mechanic
+        if (shootTime > 0) shootTime--;
+        if (game.keyD()) {
+            if (shootTime == 0) {
+                // player is allowed to shoot once
+            }
+        }
         
         // invincibility frame transparency
         if (noHitFrames > 0) {

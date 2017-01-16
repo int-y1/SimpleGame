@@ -51,6 +51,7 @@ public class Game extends World
                       Heart.class,
                       Player.class,
                       BackgroundFade.class,
+                      PlayerBullet.class,
                       Enemy.class,
                       DisplayerMiddle.class,
                       DisplayerBottom.class);
