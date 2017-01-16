@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class Enemy103 extends Enemy
 {
     
-    protected int enemySize = 30;
     protected int shootSpeed;
     protected int shootCount;
     protected int shootPeriod;
@@ -22,6 +21,7 @@ public class Enemy103 extends Enemy
         shootSpeed = Integer.parseInt(info.get(0));
         shootCount = Integer.parseInt(info.get(1));
         shootPeriod = Integer.parseInt(info.get(2));
+        enemySize = 30;
         
         // add this actor
         game.addObject(this, Integer.parseInt(info.get(3)), -30);

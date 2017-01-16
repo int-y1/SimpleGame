@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class Enemy100 extends Enemy
 {
     
-    protected int enemySize = 20;
     protected int enemySpeed;
     
     public Enemy100(Game g, ArrayList<String> info) {
@@ -18,6 +17,8 @@ public class Enemy100 extends Enemy
         game = g;
         deadAnimation = 16;
         enemySpeed = Integer.parseInt(info.get(0));
+        enemySize = 20;
+        enemyHP = 2000;
         
         // add this actor
         game.addObject(this, Integer.parseInt(info.get(1)), -20);
@@ -44,6 +45,9 @@ public class Enemy100 extends Enemy
             game.playerLoseLife();
             kill();
         }
+        
+        // check hp
+        if (enemyHP <= 0) kill();
         
         if (outOfBounds(100)) {
             // out of bounds

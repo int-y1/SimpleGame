@@ -6,12 +6,11 @@ import java.util.Arrays;
  * Write a description of class Enemy104 here.
  * 
  * @author Jason Yuen
- * @version a0.01
+ * @version a0.1
  */
 public class Enemy104 extends Enemy
 {
     
-    protected int enemySize = 30;
     protected int enemySpeed;
     protected double shootSpeed;
     protected int waitTime;
@@ -23,6 +22,7 @@ public class Enemy104 extends Enemy
         enemySpeed = Integer.parseInt(info.get(0));
         shootSpeed = Double.parseDouble(info.get(1));
         waitTime = Integer.parseInt(info.get(2));
+        enemySize = 30;
         
         // add this actor
         game.addObject(this, Integer.parseInt(info.get(3)), -20);

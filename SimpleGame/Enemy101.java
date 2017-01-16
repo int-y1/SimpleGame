@@ -6,12 +6,11 @@ import java.util.Arrays;
  * Write a description of class Enemy101 here.
  * 
  * @author Jason Yuen
- * @version a0.01
+ * @version a0.1
  */
 public class Enemy101 extends Enemy
 {
     
-    protected int enemySize = 30;
     protected int enemySpeed;
     protected int shootSpeed;
     
@@ -21,6 +20,8 @@ public class Enemy101 extends Enemy
         deadAnimation = 25;
         enemySpeed = Integer.parseInt(info.get(0));
         shootSpeed = Integer.parseInt(info.get(1));
+        enemySize = 30;
+        enemyHP = 5000;
         
         // add this actor
         game.addObject(this, Integer.parseInt(info.get(2)), -20);
@@ -67,6 +68,9 @@ public class Enemy101 extends Enemy
             game.playerLoseLife();
             kill();
         }
+        
+        // check hp
+        if (enemyHP <= 0) kill();
         
         if (outOfBounds(100)) {
             // out of bounds

@@ -11,7 +11,6 @@ import java.util.Arrays;
 public class Enemy102c extends Enemy
 {
     
-    protected int enemySize = 20;
     private double ax;
     private double ay;
     private double vx = 0.0;
@@ -28,6 +27,8 @@ public class Enemy102c extends Enemy
         this.ay = ay;
         this.restTime = restTime;
         if (restTime == 0) setImage("blooddrop.png");
+        enemySize = 20;
+        hittable = false;
         
         // add this actor
         game.addObject(this, px, py);

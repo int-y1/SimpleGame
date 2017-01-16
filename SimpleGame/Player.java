@@ -9,14 +9,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Player extends Actor
 {
     
+    // player variables
+    protected Game game;
     private final int SPEED_NORMAL = 5;
     private final int SPEED_SLOW = 2;
     private final int INVINCIBILITY_FRAMES = 50;
     private int vx = 0;                             // x velocity of the player
     private int vy = 0;                             // y velocity of the player
+    
+    // shooting mechanic variables
     private int SHOOT_COOLDOWN = 20;
     private int shootTime = 0;
-    protected Game game;
+    private double BULLET_RATIO = 0.5;              // add this multiplier of the player's velocity
+    private double BULLET_VY = -5;                  // default bullet speed
     
     public Player(Game g)
     {
@@ -107,7 +112,13 @@ public class Player extends Actor
         if (shootTime > 0) shootTime--;
         if (game.keyD()) {
             if (shootTime == 0) {
-                // player is allowed to shoot once
+                // shoot once
+                game.addObject(
+                    new PlayerBullet(game, vx*BULLET_RATIO, vy*BULLET_RATIO+BULLET_VY),
+                    getX(),
+                    getY());
+                // set cooldown
+                shootTime = SHOOT_COOLDOWN;
             }
         }
         

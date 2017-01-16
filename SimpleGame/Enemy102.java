@@ -11,7 +11,6 @@ import java.util.Arrays;
 public class Enemy102 extends Enemy
 {
     
-    protected int enemySize = 20;
     private int vx;
     private int vy;
     
@@ -21,6 +20,8 @@ public class Enemy102 extends Enemy
         deadAnimation = 1;
         vx = Integer.parseInt(info.get(2));
         vy = Integer.parseInt(info.get(3));
+        enemySize = 20;
+        hittable = false;
         
         // add this actor
         game.addObject(this, Integer.parseInt(info.get(0)), Integer.parseInt(info.get(1)));

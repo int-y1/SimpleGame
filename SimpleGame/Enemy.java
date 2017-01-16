@@ -11,6 +11,7 @@ public class Enemy extends GameObject
 {
     
     protected boolean dead = false;
+    protected boolean hittable = true;
     protected int deadAnimation;
     protected int enemySize;
     protected int enemyHP;
@@ -19,11 +20,13 @@ public class Enemy extends GameObject
         dead = true;
     }
     
-    public boolean isInside(int x, int y)
+    public boolean isHitting(int x, int y)
     {
+        // check if hittable
+        if (!hittable) return false;
+        
         // return true if this point is inside/touching the enemy
-        double dist = Math.sqrt(Math.pow(getX()-x,2) + Math.pow(getY()-y,2));
-        return dist <= enemySize;
+        return Math.pow(getX()-x,2) + Math.pow(getY()-y,2) <= Math.pow(enemySize,2);
     }
     
     public void getHit()

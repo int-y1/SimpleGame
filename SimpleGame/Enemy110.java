@@ -18,13 +18,13 @@ public class Enemy110 extends Enemy
     private double bulletAccel = 0.002;
     
     private double enemyScale = 1.0+jumps*0.1;
-    protected int enemySize = 30+jumps*3;
     
     public Enemy110(Game g, ArrayList<String> info) {
         // initialize
         game = g;
         deadAnimation = 1;
         setScaledImage("101santaPoop1.png");
+        enemySize = 30+jumps*3;
         
         // add this actor
         game.addObject(this, 256, -100);
