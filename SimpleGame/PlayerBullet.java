@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 /**
@@ -30,7 +31,8 @@ public class PlayerBullet extends GameObject
         move(vx, vy);
         
         // check hitboxes
-        for (Enemy e:game.getObjects(Enemy.class)) {
+        List<Enemy> al = game.getObjects(Enemy.class);
+        for (Enemy e : al) {
             if (e.isInside(getX(), getY())) {
                 // hit enemy
                 e.getHit();
