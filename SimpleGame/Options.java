@@ -13,7 +13,7 @@ import java.awt.FontMetrics;
 public class Options extends World
 {
     
-    private final boolean DEBUG;
+    private final boolean DEBUG = true;
     private final String BG_IMAGE_PATH = "OptionScreen.png";
     
     private DisplayerTop backButton;
@@ -29,11 +29,10 @@ public class Options extends World
      * Constructor for objects of class Options.
      * 
      */
-    public Options(boolean debug)
+    public Options()
     {
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
-        DEBUG = debug;
         
         // set paint order for the title screen
         // earlier class is drawn on a later class

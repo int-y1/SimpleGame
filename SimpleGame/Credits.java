@@ -13,7 +13,7 @@ import java.awt.FontMetrics;
 public class Credits extends World
 {
     
-    private final boolean DEBUG;
+    private final boolean DEBUG = false;
     private final String BG_IMAGE_PATH = "CreditsPage.png";
     
     private DisplayerTop backButton;
@@ -22,11 +22,10 @@ public class Credits extends World
      * Constructor for objects of class Credits.
      * 
      */
-    public Credits(boolean debug)
+    public Credits()
     {
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
-        DEBUG = debug;
         
         // make the background
         addObject(new GifDisplayer(BG_IMAGE_PATH), 256, 256);

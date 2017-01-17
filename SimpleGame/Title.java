@@ -94,11 +94,12 @@ public class Title extends World
         
         // options button
         if (Greenfoot.mouseClicked(optionsButton)) {
-            Greenfoot.setWorld(new Options(DEBUG));
+            Greenfoot.setWorld(new Options());
         }
         
         // credits button
         if (Greenfoot.mouseClicked(creditsButton)) {
+            Greenfoot.setWorld(new Credits());
         }
         
         // exit button

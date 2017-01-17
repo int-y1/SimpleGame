@@ -12,7 +12,7 @@ import java.io.IOException;
  * Write a description of class Game here.
  * 
  * @author Jason Yuen
- * @version a0.01
+ * @version a0.1
  */
 public class Game extends World
 {

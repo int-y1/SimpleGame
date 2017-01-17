@@ -28,7 +28,7 @@ public class Player extends Actor
         // get this game
         game = g;
         
-        setImage("Isaac/backwards1.png");
+        setImage("Isaac/forward1.png");
     }
     
     
@@ -73,17 +73,9 @@ public class Player extends Actor
         setLocation(newX, newY);
     }
     
-    /**
-     * Act - do whatever the Player wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act()
+    
+    private void calculateVelocity()
     {
-        // check if dead
-        if (game.isFading()) {
-            return;
-        }
-        
         // calculate player's velocity
         int moveSpeed;
         if (game.keyS()) moveSpeed = SPEED_SLOW;
@@ -104,9 +96,59 @@ public class Player extends Actor
         if (game.keyDown()) {
             vy += moveSpeed;
         }
+    }
+    
+    int walkingCycle = 0;
+    int imgNum[] = new int[]{1,2,1,3};
+    private void updateAnimation()
+    {
+        // count if player is walking
+        if (vx!=0 || vy!=0) {
+            walkingCycle += Math.abs(vx);
+            walkingCycle += Math.abs(vy);
+        }
+        else {
+            // reset walking
+            walkingCycle = 0;
+        }
+        
+        // change image
+        int imgIndex = (walkingCycle/20)%4;
+        if (shootTime > 0) {
+            setImage(String.format("Isaac/backwards%d.png", imgNum[imgIndex]));
+        }
+        else {
+            setImage(String.format("Isaac/forward%d.png", imgNum[imgIndex]));
+        }
+        
+        // do transparency
+        if (noHitFrames == 0) {
+            getImage().setTransparency(255);
+        }
+        else {
+            // transparency will be a number between 64 and 128
+            getImage().setTransparency(128 - (noHitFrames*64)/INVINCIBILITY_FRAMES);
+        }
+        setImage(getImage());
+    }
+    
+    /**
+     * Act - do whatever the Player wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public void act()
+    {
+        // check if dead
+        if (game.isFading()) {
+            return;
+        }
         
         // do movement
+        calculateVelocity();
         displacePlayer(vx, vy);
+        
+        // do animation sprites
+        updateAnimation();
         
         // shooting mechanic
         if (shootTime > 0) shootTime--;
@@ -126,16 +168,6 @@ public class Player extends Actor
         if (noHitFrames > 0) {
             // count down
             noHitFrames--;
-            
-            // do transparency
-            if (noHitFrames == 0) {
-                getImage().setTransparency(255);
-            }
-            else {
-                // transparency will be a number between 64 and 128
-                getImage().setTransparency(128 - (noHitFrames*64)/INVINCIBILITY_FRAMES);
-            }
-            setImage(getImage());
         }
     }
 }
