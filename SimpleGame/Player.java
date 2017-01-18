@@ -62,6 +62,7 @@ public class Player extends Actor
     
     public void displacePlayer(int dx, int dy)
     {
+        // get new coordinates
         int newX = getX()+dx;
         int newY = getY()+dy;
         
@@ -70,6 +71,11 @@ public class Player extends Actor
         if (newY<32)  newY=32;
         if (newY>464) newY=464;
         
+        // update to actual velocity
+        vx = newX-getX();
+        vy = newY-getY();
+        
+        // set player's location
         setLocation(newX, newY);
     }
     
@@ -80,6 +86,7 @@ public class Player extends Actor
         int moveSpeed;
         if (game.keyS()) moveSpeed = SPEED_SLOW;
         else moveSpeed = SPEED_NORMAL;
+        
         // calculate vx from left/right keys
         vx = 0;
         if (game.keyLeft()) {
@@ -88,6 +95,7 @@ public class Player extends Actor
         if (game.keyRight()) {
             vx += moveSpeed;
         }
+        
         // calculate vy from up/down keys
         vy = 0;
         if (game.keyUp()) {
@@ -103,13 +111,13 @@ public class Player extends Actor
     private void updateAnimation()
     {
         // count if player is walking
-        if (vx!=0 || vy!=0) {
-            walkingCycle += Math.abs(vx);
-            walkingCycle += Math.abs(vy);
-        }
-        else {
+        if (vx==0 && vy==0) {
             // reset walking
             walkingCycle = 0;
+        }
+        else {
+            walkingCycle += Math.abs(vx);
+            walkingCycle += Math.abs(vy);
         }
         
         // change image

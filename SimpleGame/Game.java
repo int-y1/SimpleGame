@@ -191,7 +191,16 @@ public class Game extends World
                 else {
                     // player advances to a new level
                     try {
-                        Greenfoot.setWorld(new Game(LEVEL+1, lives+1, DIFFICULTY, null));
+                        // calculate number of new lives
+                        int newLives;
+                        if (DIFFICULTY == 1) {
+                            if (LEVEL%2 == 0) newLives = 0;
+                            else newLives = 1;
+                        }
+                        else newLives = 1;
+                        
+                        // go to next level
+                        Greenfoot.setWorld(new Game(LEVEL+1, lives+newLives, DIFFICULTY, null));
                     }
                     catch (IOException e) {
                         Greenfoot.setWorld(new Title());
