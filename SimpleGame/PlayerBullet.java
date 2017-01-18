@@ -37,6 +37,7 @@ public class PlayerBullet extends GameObject
                 // hit enemy
                 e.getHit();
                 // remove this object
+                Greenfoot.playSound("tear.mp3");
                 removeFast();
                 return;
             }
@@ -44,6 +45,7 @@ public class PlayerBullet extends GameObject
         
         if (outOfBounds(100)) {
             // out of bounds
+            Greenfoot.playSound("tear.mp3");
             removeFast();
         }
     }
