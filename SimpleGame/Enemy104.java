@@ -23,6 +23,7 @@ public class Enemy104 extends Enemy
         shootSpeed = Double.parseDouble(info.get(1));
         waitTime = Integer.parseInt(info.get(2));
         enemySize = 30;
+        enemyHP = 2000;
         
         // add this actor
         game.addObject(this, Integer.parseInt(info.get(3)), -20);
@@ -50,9 +51,9 @@ public class Enemy104 extends Enemy
                 // shoot bullets at the player
                 double playerAngle = game.getPlayerAngle(getX(), getY());
                 for (int i=5; i<=15; i++) {
-                    new Enemy102c(game, getX(), getY(), shootSpeed*Math.cos(playerAngle-0.4)*i, shootSpeed*Math.sin(playerAngle-0.4)*i, 0);
-                    new Enemy102c(game, getX(), getY(), shootSpeed*Math.cos(playerAngle)*i, shootSpeed*Math.sin(playerAngle)*i, 0);
-                    new Enemy102c(game, getX(), getY(), shootSpeed*Math.cos(playerAngle+0.4)*i, shootSpeed*Math.sin(playerAngle+0.4)*i, 0);
+                    new Enemy102c(game, getX(), getY()+20, shootSpeed*Math.cos(playerAngle-0.4)*i, shootSpeed*Math.sin(playerAngle-0.4)*i, 0);
+                    new Enemy102c(game, getX(), getY()+20, shootSpeed*Math.cos(playerAngle)*i, shootSpeed*Math.sin(playerAngle)*i, 0);
+                    new Enemy102c(game, getX(), getY()+20, shootSpeed*Math.cos(playerAngle+0.4)*i, shootSpeed*Math.sin(playerAngle+0.4)*i, 0);
                 }
             }
         }
@@ -88,6 +89,9 @@ public class Enemy104 extends Enemy
             game.playerLoseLife();
             kill();
         }
+        
+        // check hp
+        if (enemyHP <= 0) kill();
         
         if (outOfBounds(100)) {
             // out of bounds

@@ -69,3 +69,14 @@ ID values supported
     k4 - x coordinate of the spawn
   Example usage:
     2 12 90 256 (regular nerve ending down the middle, looks generic)
+
+104 (Santa Poop 2)
+  This enemy waits, then shoots 3 streams of droplets at the player.
+  Afterwards, it jumps every 70 frames and no longer shoots droplets.
+  k = 4
+    k1 - y velocity of the enemy while jumping
+	k2 - Acceleration of droplets (0.02 is pretty fast, 0.002 is very slow)
+    k3 - Enemy shoots at this y coordinate (between 0 and 512)
+    k4 - The x coordinate that this Santa Poop will spawn on
+  Example usage:
+    5 0.005 100 256 (Waits in the center, then shoots)
