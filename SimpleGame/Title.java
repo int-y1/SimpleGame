@@ -70,6 +70,12 @@ public class Title extends World
         exitButton = new DisplayerTop(temp);
         addObject(exitButton, 422, 214);
         
+        // Create Music
+        GreenfootSound bgMusic = new GreenfootSound("menu.mp3");
+        bgMusic.playLoop();
+        bgMusic.setVolume(50);
+        
+        
         if (DEBUG) {
             debugPlayButton = new DisplayerTop(PLAY_BUTTON_PATH);
             addObject(debugPlayButton, 64, 480);
