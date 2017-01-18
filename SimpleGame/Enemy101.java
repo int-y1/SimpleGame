@@ -10,10 +10,10 @@ import java.util.Arrays;
  */
 public class Enemy101 extends Enemy
 {
-    
+
     protected int enemySpeed;
     protected int shootSpeed;
-    
+
     public Enemy101(Game g, ArrayList<String> info) {
         // initialize
         game = g;
@@ -22,20 +22,23 @@ public class Enemy101 extends Enemy
         shootSpeed = Integer.parseInt(info.get(1));
         enemySize = 30;
         enemyHP = 5000;
-        
+
         // add this actor
         game.addObject(this, Integer.parseInt(info.get(2)), -20);
     }
-    
+
     protected void dying() {
         // change animations when necessary
-        if (deadAnimation == 24) setImage("101santaPoopDeath1.png");
+        if (deadAnimation == 24){
+            setImage("101santaPoopDeath1.png");
+            Greenfoot.playSound("deathLarge.mp3");
+        }
         if (deadAnimation == 19) setImage("101santaPoopDeath2.png");
         if (deadAnimation == 14) setImage("101santaPoopDeath3.png");
         if (deadAnimation == 9)  setImage("101santaPoopDeath4.png");
         if (deadAnimation == 4)  setImage("101santaPoopDeath5.png");
     }
-    
+
     protected void alive() {
         // animations and movement
         if (timer%70 < 30) {
@@ -53,7 +56,7 @@ public class Enemy101 extends Enemy
         else {
             setImage("101santaPoop4.png");
             move(0, 1);
-            
+
             if (timer%70 == 50) {
                 // spawn tears
                 new Enemy102(game, makeArrayList(new int[]{getX(), getY(), 0, shootSpeed}));
@@ -62,16 +65,18 @@ public class Enemy101 extends Enemy
                 new Enemy102(game, makeArrayList(new int[]{getX(), getY(), -shootSpeed, 0}));
             }
         }
-        
+
+        if (timer%70 == 40) Greenfoot.playSound("poopLanding.mp3");
+
         if (game.getPlayerDist(getX(), getY()) <= enemySize) {
             // hit player
             game.playerLoseLife();
             kill();
         }
-        
+
         // check hp
         if (enemyHP <= 0) kill();
-        
+
         if (outOfBounds(100)) {
             // out of bounds
             removeFast();

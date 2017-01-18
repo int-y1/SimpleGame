@@ -32,6 +32,7 @@ public class Enemy103 extends Enemy
     public void attack()
     {
         // shoot projectiles in a circle
+        Greenfoot.playSound("bloodShot.mp3");
         for (int i=0; i<shootCount; i++) {
             new Enemy102b(game,
                           getX(),
