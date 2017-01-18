@@ -45,15 +45,22 @@ public class GameSettings
     
     // current music that is playing
     GreenfootSound bgMusic = null;
+    String musicPath = null;
     
     public void setMusic(String music)
     {
+        // check if already playing this song
+        if (music.equals(musicPath)) {
+            return;
+        }
+        
         // remove existing music
         if (bgMusic != null) {
             bgMusic.stop();
         }
         
         // add new music
+        musicPath = music;
         bgMusic = new GreenfootSound(music);
         bgMusic.playLoop();
         bgMusic.setVolume(musicVolume);

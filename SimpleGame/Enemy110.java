@@ -14,17 +14,18 @@ public class Enemy110 extends Enemy
     protected int enemySpeed = -10;
     protected int shootSpeed = 2;
     private int jumpFrame = 0;
-    private int jumps = 8;
+    private int jumpNum = 0;
     private double bulletAccel = 0.002;
     
-    private double enemyScale = 1.0+jumps*0.1;
+    private double enemyScale = 1.8;
     
     public Enemy110(Game g, ArrayList<String> info) {
         // initialize
         game = g;
         deadAnimation = 1;
         setScaledImage("101santaPoop1.png");
-        enemySize = 30+jumps*3;
+        enemySize = (int)(30*enemyScale);
+        enemyHP = 400000;
         
         // add this actor
         game.addObject(this, 256, -100);
@@ -36,51 +37,67 @@ public class Enemy110 extends Enemy
     private void setScaledImage(String imageFile) {
         // set image first
         setImage(imageFile);
-        // double the image size
+        // change the image size
         getImage().scale((int)(getImage().getWidth()*enemyScale), (int)(getImage().getHeight()*enemyScale));
-        //setImage(getImage());
     }
     
-    private void lowerScale() {
+    private void updateScale() {
         // change scaling and hitbox size
-        enemyScale-=0.1;
-        enemySize-=3;
+        enemyScale = 1+enemyHP/500000.0;
+        enemySize = (int)(30*enemyScale);
+    }
+    
+    public void getHit()
+    {
+        enemyHP -= 1000;
+        if (enemyHP < 0) enemyHP = 0;
+        updateScale();
     }
     
     protected void alive() {
         // animations and movement
         if (jumpFrame == 0) {
             // get ready to jump
-            if (getY() > 384 && jumps > 0) {
-                setScaledImage("101santaPoop2.png");
+            if (getY() > 384) {
+                // do a jump
                 jumpFrame = 1;
-                jumps--;
+                enemyHP -= 50000;
+                updateScale();
+                setScaledImage("101santaPoop2.png");
+            }
+            else {
+                // keep waiting
+                setScaledImage("101santaPoop1.png");
             }
             move(0, 1);
         }
         else if (jumpFrame < 10) {
             // do nothing right now
+            setScaledImage("101santaPoop2.png");
             jumpFrame++;
             move(0, 1);
         }
         else if (jumpFrame < 40) {
-            // set image
-            if (jumpFrame == 10) setScaledImage("101santaPoop3.png");
             // do the actual jump
+            setScaledImage("101santaPoop3.png");
             jumpFrame++;
             move(0, enemySpeed);
+            
+            // play shoot sound
+            if (jumpFrame == 30) Greenfoot.playSound("poopLanding.mp3");
         }
         else if (jumpFrame < 60) {
+            // set image
+            setScaledImage("101santaPoop4.png");
+            
             if (jumpFrame == 40) {
-                // set image
-                lowerScale();
-                setScaledImage("101santaPoop4.png");
                 
                 // plus, spawn some tears
                 for (int i=-20; i<20; i++) {
                     // get constants
                     int delayTime = Math.abs(i*8);
-                    double phase = i*0.3 + jumps*5;
+                    jumpNum++;
+                    double phase = i*0.3 + jumpNum*5;
                     
                     // horizontal bullets
                     new Enemy102c(game, getX()+i*32+8, getY(), bulletAccel/2 * Math.sin(phase), bulletAccel * Math.cos(phase), delayTime);
@@ -90,14 +107,15 @@ public class Enemy110 extends Enemy
                 }
                 
                 // replace the boss if there are no jumps left
-                if (jumps==0) {
+                if (enemyHP <= 0) {
                     // make a santa poop at this location
-                    Enemy101 tempEnemy = new Enemy101(game, makeArrayList(new int[]{3,2,256}));
+                    Enemy101 tempEnemy = new Enemy101(game, makeArrayList(new int[]{-2,2,256}));
                     tempEnemy.setLocation(getX(), getY());
                     removeFast();
                     return;
                 }
             }
+            
             // do nothing
             jumpFrame++;
             move(0, 1);

@@ -45,7 +45,10 @@ public class Enemy103 extends Enemy
     // replace the getHit code to suit this enemy
     public void getHit()
     {
-        attack();
+        // check if capable of attacking
+        if (shootPeriod < 1000) attack();
+        
+        // slow down shoot rate
         shootPeriod = Math.min(10000, shootPeriod*2);
     }
     

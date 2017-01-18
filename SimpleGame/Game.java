@@ -91,6 +91,9 @@ public class Game extends World
         USER_INPUT = new InputInterface(replayPath, DIFFICULTY == 1);
         LID = new LevelInfoDisplayer(this, lives, MAX_LIVES, 0);
         
+        // initialize music
+        gameSettings.setMusic(tokens[2]);
+        
         // initialize player
         player = new Player(this);
         this.addObject(player, 256, 384);
