@@ -18,12 +18,11 @@ public class Game extends World
 {
     
     private final int MAX_LIVES = 10;
-    private final String LEVEL_PATH= "/levels/level%d.txt";
-    private final String SOUND_PATH= "level%d.mp3";
-    private final GreenfootSound bgMusic;
     
+    private GameSettings gameSettings;
     private final int LEVEL;
     private final int DIFFICULTY;
+    private final String LEVEL_PATH= "/levels/level%d.txt";
     
     private final InputInterface USER_INPUT;
     private final LevelReader LR;
@@ -42,12 +41,16 @@ public class Game extends World
      * This method is used for playing a level.
      * 
      */
-    public Game(int levelNumber, int lives, int difficulty, String replayPath) throws IOException
+    public Game(GameSettings gs, int lives, String replayPath) throws IOException
     {
         // screen size is 512x512 pixels
         super(512, 512, 1, false);
-        LEVEL = levelNumber;
-        DIFFICULTY = difficulty;
+        
+        // get info from game settings
+        gameSettings = gs;
+        LEVEL = gs.getLevel();
+        DIFFICULTY = gs.getDifficulty();
+        this.lives = lives;
         
         // set paint order for the game
         // earlier class is drawn on a later class
@@ -60,12 +63,8 @@ public class Game extends World
                       DisplayerMiddle.class,
                       DisplayerBottom.class);
         
-        // Set Music
-        bgMusic.play();
-        bgMusic.setVolume(100);
-        
         // get the level file into a Scanner
-        InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, levelNumber));
+        InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, LEVEL));
         if (stream == null) {
             // level does not exist
             // player completed the game
@@ -96,7 +95,6 @@ public class Game extends World
         player = new Player(this);
         this.addObject(player, 256, 384);
         if (lives > MAX_LIVES) lives = MAX_LIVES;
-        this.lives = lives;
         
     }
     
@@ -151,7 +149,7 @@ public class Game extends World
     public void playerLoseLife()
     {
         // check if invincible
-        if (player.invincible()) {
+        if (player.invincible() || isFading()) {
             return;
         }
         
@@ -160,7 +158,7 @@ public class Game extends World
         LID.setLives(lives);
         
         // check if game over
-        if (lives==0) {
+        if (playerDead()) {
             player.setImage("Isaac/death1.png");
             bgFading = true;
         }
@@ -192,7 +190,7 @@ public class Game extends World
             if (fadeAnimation == 0) {
                 if (playerDead() || USER_INPUT.isReplay()) {
                     // player goes back to the title screen
-                    Greenfoot.setWorld(new Title());
+                    Greenfoot.setWorld(new Title(gameSettings));
                 }
                 else {
                     // player advances to a new level
@@ -205,11 +203,14 @@ public class Game extends World
                         }
                         else newLives = 1;
                         
+                        // update game level
+                        gameSettings.setLevel(gameSettings.getLevel()+1);
+                        
                         // go to next level
-                        Greenfoot.setWorld(new Game(LEVEL+1, lives+newLives, DIFFICULTY, null));
+                        Greenfoot.setWorld(new Game(gameSettings, lives+newLives, null));
                     }
                     catch (IOException e) {
-                        Greenfoot.setWorld(new Title());
+                        Greenfoot.setWorld(new Title(gameSettings));
                     }
                 }
             }

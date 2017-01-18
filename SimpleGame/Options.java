@@ -16,21 +16,24 @@ public class Options extends World
     private final boolean DEBUG = false;
     private final String BG_IMAGE_PATH = "OptionScreen.png";
     
+    private GameSettings gameSettings;
+    
     private DisplayerTop backButton;
     private DisplayerTop yesButton;
     private DisplayerTop noButton;
     private DisplayerTop fly;
     
-    private boolean musicSelection = true;
+    private boolean musicOn;
     
     /**
      * Constructor for objects of class Options.
      * 
      */
-    public Options()
+    public Options(GameSettings gs)
     {
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
+        gameSettings = gs;
         
         // set paint order for the title screen
         // earlier class is drawn on a later class
@@ -65,6 +68,7 @@ public class Options extends World
         addObject(noButton,333,225);
         
         // fly
+        musicOn = (gameSettings.getMusicVolume() > 0);
         fly = new DisplayerTop("100flies1.png");
         addObject(fly,342,250);
         moveFly();
@@ -73,7 +77,7 @@ public class Options extends World
     private void moveFly()
     {
         // choose position of fly, based on musicSelection
-        if (musicSelection) {
+        if (musicOn) {
             fly.setLocation(yesButton.getX(), yesButton.getY()-25);
         }
         else {
@@ -88,18 +92,20 @@ public class Options extends World
     {
         // back button
         if (Greenfoot.isKeyDown("escape") || Greenfoot.mouseClicked(backButton)) {
-            Greenfoot.setWorld(new Title());
+            Greenfoot.setWorld(new Title(gameSettings));
         }
         
         // yes button
         if (Greenfoot.isKeyDown("left") || Greenfoot.mouseClicked(yesButton)) {
-            musicSelection = true;
+            musicOn = true;
+            gameSettings.setMusicVolume(100);
             moveFly();
         }
         
         // no button
         if (Greenfoot.isKeyDown("right") || Greenfoot.mouseClicked(noButton)) {
-            musicSelection = false;
+            musicOn = false;
+            gameSettings.setMusicVolume(0);
             moveFly();
         }
     }

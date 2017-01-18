@@ -14,18 +14,21 @@ public class Credits extends World
 {
     
     private final boolean DEBUG = false;
-    private final String BG_IMAGE_PATH = "CreditsPage.png";
     
+    private GameSettings gameSettings;
+    
+    private final String BG_IMAGE_PATH = "CreditsPage.png";
     private DisplayerTop backButton;
     
     /**
      * Constructor for objects of class Credits.
      * 
      */
-    public Credits()
+    public Credits(GameSettings gs)
     {
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
+        gameSettings = gs;
         
         // make the background
         addObject(new GifDisplayer(BG_IMAGE_PATH), 256, 256);
@@ -45,7 +48,7 @@ public class Credits extends World
     {
         // back button
         if (Greenfoot.isKeyDown("escape") || Greenfoot.mouseClicked(backButton)) {
-            Greenfoot.setWorld(new Title());
+            Greenfoot.setWorld(new Title(gameSettings));
         }
     }
 }

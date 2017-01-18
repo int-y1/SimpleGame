@@ -14,6 +14,9 @@ public class LevelSelection extends World
 {
     
     private final boolean DEBUG = true;
+    
+    private GameSettings gameSettings;
+    
     private final String BG_IMAGE_PATH = "LevelScreen.png";
     
     private DisplayerTop backButton;
@@ -36,10 +39,11 @@ public class LevelSelection extends World
      * Constructor for objects of class LevelSelection.
      * 
      */
-    public LevelSelection()
+    public LevelSelection(GameSettings gs)
     {
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
+        gameSettings = gs;
         
         // set paint order for the title screen
         // earlier class is drawn on a later class
@@ -190,7 +194,7 @@ public class LevelSelection extends World
     {
         // back button
         if (Greenfoot.isKeyDown("escape") || Greenfoot.mouseClicked(backButton)) {
-            Greenfoot.setWorld(new Title());
+            Greenfoot.setWorld(new Title(gameSettings));
         }
         
         // do scroll countdown
@@ -237,8 +241,12 @@ public class LevelSelection extends World
         
         // play button
         if (Greenfoot.mouseClicked(playButton)) {
+            // change game settings
+            gameSettings.setLevel(levelSelect);
+            gameSettings.setDifficulty(difficulty);
+            
             try {
-                Greenfoot.setWorld(new Game(levelSelect, 2, difficulty, null));
+                Greenfoot.setWorld(new Game(gameSettings, 2, null));
             }
             catch (IOException e) {
                 //

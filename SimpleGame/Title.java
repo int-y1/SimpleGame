@@ -14,6 +14,8 @@ public class Title extends World
     private final String DEBUG_BUTTON_PATH = "map0c.png";
     private DisplayerTop debugPlayButton;
     
+    private GameSettings gameSettings;
+    
     private final String PLAY_BUTTON_PATH = "map0c.png";
     private final String BG_IMAGE_PATH = "TitleScreen.gif";
     
@@ -23,13 +25,30 @@ public class Title extends World
     private DisplayerTop exitButton;
     
     /**
-     * Constructor for objects of class Title.
-     * 
+     * Constructor to start the game.
      */
     public Title()
     {
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
+        
+        Greenfoot.setWorld(new Title(null));
+    }
+    
+    /**
+     * The real constructor for this game.
+     */
+    public Title(GameSettings gs)
+    {
+        // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
+        super(512, 512, 1);
+        
+        if (gs == null) {
+            gameSettings = new GameSettings();
+        }
+        else {
+            gameSettings = gs;
+        }
         
         // set paint order for the title screen
         // earlier class is drawn on a later class
@@ -70,11 +89,8 @@ public class Title extends World
         exitButton = new DisplayerTop(temp);
         addObject(exitButton, 422, 214);
         
-        // Create Music
-        GreenfootSound bgMusic = new GreenfootSound("menu.mp3");
-        bgMusic.playLoop();
-        bgMusic.setVolume(50);
-        
+        // create music
+        gameSettings.setMusic("menu.mp3");
         
         if (DEBUG) {
             debugPlayButton = new DisplayerTop(PLAY_BUTTON_PATH);
@@ -90,17 +106,17 @@ public class Title extends World
     {
         // play button
         if (Greenfoot.isKeyDown("enter") || Greenfoot.mouseClicked(playButton)) {
-            Greenfoot.setWorld(new LevelSelection());
+            Greenfoot.setWorld(new LevelSelection(gameSettings));
         }
         
         // options button
         if (Greenfoot.mouseClicked(optionsButton)) {
-            Greenfoot.setWorld(new Options());
+            Greenfoot.setWorld(new Options(gameSettings));
         }
         
         // credits button
         if (Greenfoot.mouseClicked(creditsButton)) {
-            Greenfoot.setWorld(new Credits());
+            Greenfoot.setWorld(new Credits(gameSettings));
         }
         
         // exit button
@@ -112,7 +128,7 @@ public class Title extends World
         // debug button
         if (DEBUG && Greenfoot.mouseClicked(debugPlayButton)) {
             try {
-                Greenfoot.setWorld(new Game(0, 10, 1, null));
+                Greenfoot.setWorld(new Game(gameSettings, 10, null));
             }
             catch (Exception e) {
                 e.printStackTrace();
