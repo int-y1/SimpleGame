@@ -72,6 +72,8 @@ public class Enemy110 extends Enemy
             move(0, 1);
         }
         else if (jumpFrame < 10) {
+            if (jumpFrame == 1) Greenfoot.playSound("roar.mp3");
+                
             // do nothing right now
             setScaledImage("101santaPoop2.png");
             jumpFrame++;
@@ -84,7 +86,7 @@ public class Enemy110 extends Enemy
             move(0, enemySpeed);
             
             // play shoot sound
-            if (jumpFrame == 30) Greenfoot.playSound("poopLanding.mp3");
+            if (jumpFrame == 30) Greenfoot.playSound("heavyLand.mp3");
         }
         else if (jumpFrame < 60) {
             // set image
