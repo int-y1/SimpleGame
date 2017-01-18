@@ -26,7 +26,10 @@ public class Enemy100 extends Enemy
     
     protected void dying() {
         // change animations when necessary
-        if (deadAnimation == 15) setImage("100fliesDeath1.png");
+        if (deadAnimation == 15) {
+            setImage("100fliesDeath1.png");
+            Greenfoot.playSound("deathSmall.mp3");
+        }
         if (deadAnimation == 11) setImage("100fliesDeath2.png");
         if (deadAnimation == 7)  setImage("100fliesDeath3.png");
         if (deadAnimation == 3)  setImage("100fliesDeath4.png");
