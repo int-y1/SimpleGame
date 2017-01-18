@@ -19,6 +19,8 @@ public class Game extends World
     
     private final int MAX_LIVES = 10;
     private final String LEVEL_PATH= "/levels/level%d.txt";
+    private final String SOUND_PATH= "level%d.mp3";
+    private final GreenfootSound bgMusic;
     
     private final int LEVEL;
     private final int DIFFICULTY;
@@ -57,6 +59,10 @@ public class Game extends World
                       Enemy.class,
                       DisplayerMiddle.class,
                       DisplayerBottom.class);
+        
+        // Set Music
+        bgMusic.play();
+        bgMusic.setVolume(100);
         
         // get the level file into a Scanner
         InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, levelNumber));
