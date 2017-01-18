@@ -18,6 +18,7 @@ import java.io.IOException;
 public class InputInterface
 {
     public final boolean REPLAY;
+    public final boolean readD;
     
     private Queue<Character> keystrokes = new LinkedList<Character>();
     
@@ -29,7 +30,10 @@ public class InputInterface
     public boolean s;
     public boolean d;
     
-    public InputInterface(String replayPath) throws IOException {
+    public InputInterface(String replayPath, boolean readD) throws IOException {
+        // set variable readD
+        this.readD = readD;
+        
         if (replayPath == null || replayPath == "") {
             REPLAY = false;
         }
@@ -61,12 +65,12 @@ public class InputInterface
     
     public void readUserStroke() {
         // replace the keys
-        right=Greenfoot.isKeyDown("right");
-        up=Greenfoot.isKeyDown("up");
-        left=Greenfoot.isKeyDown("left");
-        down=Greenfoot.isKeyDown("down");
-        s=Greenfoot.isKeyDown("s");
-        d=Greenfoot.isKeyDown("d");
+        right = Greenfoot.isKeyDown("right");
+        up    = Greenfoot.isKeyDown("up");
+        left  = Greenfoot.isKeyDown("left");
+        down  = Greenfoot.isKeyDown("down");
+        s     = Greenfoot.isKeyDown("s");
+        d     = readD && Greenfoot.isKeyDown("d");
         
         // encode A
         // get the corresponding number

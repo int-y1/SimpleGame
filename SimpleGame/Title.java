@@ -83,13 +83,8 @@ public class Title extends World
     public void act()
     {
         // play button
-        if (Greenfoot.mouseClicked(playButton)) {
-            try {
-                Greenfoot.setWorld(new Game(1, 2, null));
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (Greenfoot.isKeyDown("enter") || Greenfoot.mouseClicked(playButton)) {
+            Greenfoot.setWorld(new LevelSelection());
         }
         
         // options button
@@ -111,7 +106,7 @@ public class Title extends World
         // debug button
         if (DEBUG && Greenfoot.mouseClicked(debugPlayButton)) {
             try {
-                Greenfoot.setWorld(new Game(0, 10, null));
+                Greenfoot.setWorld(new Game(0, 10, 1, null));
             }
             catch (Exception e) {
                 e.printStackTrace();

@@ -21,6 +21,7 @@ public class Game extends World
     private final String LEVEL_PATH= "/levels/level%d.txt";
     
     private final int LEVEL;
+    private final int DIFFICULTY;
     
     private final InputInterface USER_INPUT;
     private final LevelReader LR;
@@ -39,11 +40,12 @@ public class Game extends World
      * This method is used for playing a level.
      * 
      */
-    public Game(int levelNumber, int lives, String replayPath) throws IOException
+    public Game(int levelNumber, int lives, int difficulty, String replayPath) throws IOException
     {
         // screen size is 512x512 pixels
         super(512, 512, 1, false);
         LEVEL = levelNumber;
+        DIFFICULTY = difficulty;
         
         // set paint order for the game
         // earlier class is drawn on a later class
@@ -81,7 +83,7 @@ public class Game extends World
         
         // initialize remaining helpers
         BH = new BackgroundHelper(this, LEVEL, Integer.parseInt(tokens[0]), tokens[1]);
-        USER_INPUT = new InputInterface(replayPath);
+        USER_INPUT = new InputInterface(replayPath, DIFFICULTY == 1);
         LID = new LevelInfoDisplayer(this, lives, MAX_LIVES, 0);
         
         // initialize player
@@ -189,7 +191,7 @@ public class Game extends World
                 else {
                     // player advances to a new level
                     try {
-                        Greenfoot.setWorld(new Game(LEVEL+1, lives+1, null));
+                        Greenfoot.setWorld(new Game(LEVEL+1, lives+1, DIFFICULTY, null));
                     }
                     catch (IOException e) {
                         Greenfoot.setWorld(new Title());

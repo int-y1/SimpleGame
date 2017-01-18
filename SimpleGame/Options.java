@@ -13,17 +13,15 @@ import java.awt.FontMetrics;
 public class Options extends World
 {
     
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = false;
     private final String BG_IMAGE_PATH = "OptionScreen.png";
     
     private DisplayerTop backButton;
-    private DisplayerTop leftButton;
-    private DisplayerTop rightButton;
-    private DisplayerTop playButton;
-    private DisplayerTop levelDisplay;
+    private DisplayerTop yesButton;
+    private DisplayerTop noButton;
+    private DisplayerTop fly;
     
-    private final int MAX_LEVEL=8;
-    private int levelSelect=1;
+    private boolean musicSelection = true;
     
     /**
      * Constructor for objects of class Options.
@@ -52,73 +50,36 @@ public class Options extends World
         backButton = new DisplayerTop(temp);
         addObject(backButton,45,452);
         
-        // left button
-        temp = new GreenfootImage(36, 18);
+        // yes button
+        temp = new GreenfootImage(22, 36);
         if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
         if (DEBUG) temp.fill();
-        leftButton = new DisplayerTop(temp);
-        addObject(leftButton,182,250);
+        yesButton = new DisplayerTop(temp);
+        addObject(yesButton,286,225);
         
-        // right button
-        temp = new GreenfootImage(36, 18);
+        // no button
+        temp = new GreenfootImage(22, 36);
         if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
         if (DEBUG) temp.fill();
-        rightButton = new DisplayerTop(temp);
-        addObject(rightButton,342,250);
+        noButton = new DisplayerTop(temp);
+        addObject(noButton,333,225);
         
-        // play button
-        temp = new GreenfootImage(110, 30);
-        if (DEBUG) temp.setColor(new Color(1f,1f,1f,0.5f));
-        if (DEBUG) temp.fill();
-        playButton = new DisplayerTop(temp);
-        addObject(playButton,260,250);
-        
-        // level display
-        levelDisplay = new DisplayerTop("nothing.png");
-        addObject(levelDisplay,260,210);
-        updateLevelDisplay();
+        // fly
+        fly = new DisplayerTop("100flies1.png");
+        addObject(fly,342,250);
+        moveFly();
     }
     
-    private void updateLevelDisplay()
+    private void moveFly()
     {
-        // set up the font
-        Font tempFont = new Font("Comic Sans MS", Font.PLAIN, 40);
-        // set up the GreenfootImage
-        GreenfootImage tempImage = new GreenfootImage(200,32);
-        tempImage.setColor(Color.BLACK);
-        tempImage.setFont(tempFont);
-        
-        // draw centered text
-        // the main challenge is getting a FontMetrics object
-        String str = Integer.toString(levelSelect);
-        int textWidth = tempImage.getAwtImage().getGraphics().getFontMetrics(tempFont).stringWidth(str);
-        tempImage.drawString(str, 100-textWidth/2, 30);
-        
-        // update the image
-        levelDisplay.setImage(tempImage);
-    }
-    
-    private void levelChange(int amount)
-    {
-        // change the level
-        levelSelect += amount;
-        
-        if (levelSelect < 1) {
-            // level number too low
-            levelSelect = 1;
+        // choose position of fly, based on musicSelection
+        if (musicSelection) {
+            fly.setLocation(yesButton.getX(), yesButton.getY()-25);
         }
-        else if (!(levelSelect <= MAX_LEVEL || DEBUG)) {
-            // level number too high
-            levelSelect = MAX_LEVEL;
+        else {
+            fly.setLocation(noButton.getX(), noButton.getY()-25);
         }
-        
-        // update number to screen
-        updateLevelDisplay();
     }
-    
-    // level scrolling variables
-    int SCROLL_MAX_COOLDOWN = 15;
-    int scrollCooldown = 0;
     
     /**
      * Every act, this World reads the user input and responds appropriately.
@@ -130,42 +91,16 @@ public class Options extends World
             Greenfoot.setWorld(new Title());
         }
         
-        // do scroll countdown
-        if (scrollCooldown > 0) {
-            if (Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("right")) {
-                // something is pressed
-                // lower cooldown by one
-                scrollCooldown--;
-            }
-            else {
-                // nothing is pressed
-                // set to zero automatically
-                scrollCooldown = 0;
-            }
+        // yes button
+        if (Greenfoot.isKeyDown("left") || Greenfoot.mouseClicked(yesButton)) {
+            musicSelection = true;
+            moveFly();
         }
         
-        // left button
-        if ((Greenfoot.isKeyDown("left") && scrollCooldown==0) || Greenfoot.mouseClicked(leftButton)) {
-            // do left press
-            scrollCooldown = SCROLL_MAX_COOLDOWN;
-            levelChange(-1);
-        }
-        
-        // right button
-        if ((Greenfoot.isKeyDown("right") && scrollCooldown==0) || Greenfoot.mouseClicked(rightButton)) {
-            // do right press
-            scrollCooldown = SCROLL_MAX_COOLDOWN;
-            levelChange(1);
-        }
-        
-        // play button
-        if (Greenfoot.mouseClicked(playButton)) {
-            try {
-                Greenfoot.setWorld(new Game(levelSelect, 2, null));
-            }
-            catch (IOException e) {
-                //
-            }
+        // no button
+        if (Greenfoot.isKeyDown("right") || Greenfoot.mouseClicked(noButton)) {
+            musicSelection = false;
+            moveFly();
         }
     }
 }
