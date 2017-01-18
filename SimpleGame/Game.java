@@ -162,11 +162,13 @@ public class Game extends World
         
         // check if game over
         if (playerDead()) {
+            Greenfoot.playSound("deathPlayer.mp3");
             player.setImage("Isaac/death1.png");
             bgFading = true;
         }
         else {
             // make the player invincible for a while
+            Greenfoot.playSound("ouch.mp3");
             player.makeInvincible();
         }
     }
@@ -202,7 +204,10 @@ public class Game extends World
                         int newLives;
                         if (DIFFICULTY == 1) {
                             if (LEVEL%2 == 0) newLives = 0;
-                            else newLives = 1;
+                            else {
+                                newLives = 1;
+                                Greenfoot.playSound("lifeUp.mp3");
+                            }
                         }
                         else newLives = 1;
                         
@@ -211,6 +216,9 @@ public class Game extends World
                         
                         // go to next level
                         Greenfoot.setWorld(new Game(gameSettings, lives+newLives, null));
+                        
+                         // reset music volume
+                        gameSettings.setMusicVolume(100);
                     }
                     catch (IOException e) {
                         Greenfoot.setWorld(new Title(gameSettings));
@@ -221,6 +229,15 @@ public class Game extends World
             
             if (playerDead()) {
                 // player is dead
+                
+                
+                // fade out music
+                if (fadeAnimation%2 == 0){
+                    gameSettings.setMusicVolume(gameSettings.getMusicVolume()-1);
+                }
+                if (fadeAnimation == 175){
+                    Greenfoot.playSound("deathMusic.mp3");  
+                }
                 
                 // do player image
                 if (fadeAnimation == (FADE_DURATION*5)/6) {
