@@ -22,9 +22,13 @@ public class WinningScreen extends World
         
         // get info from game settings
         gameSettings = gs;
-        
+    }
+    
+    public void act()
+    {
         // actually, this World is incomplete
         // send the player to the credits
-        Greenfoot.setWorld(new Credits(gs));
+        System.out.println("hello\n");
+        Greenfoot.setWorld(new Credits(gameSettings));
     }
 }

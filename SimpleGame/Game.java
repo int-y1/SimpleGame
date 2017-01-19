@@ -61,12 +61,6 @@ public class Game extends World
         LEVEL = gs.getLevel();
         DIFFICULTY = gs.getDifficulty();
         
-        // initialize player
-        player = new Player(this);
-        addObject(player, 256, 384);
-        this.lives = lives;
-        if (this.lives > MAX_LIVES) this.lives = MAX_LIVES;
-        
         // get the level file into a Scanner
         InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, LEVEL));
         if (stream == null) {
@@ -93,6 +87,12 @@ public class Game extends World
         String[] tokens = sc.nextLine().split("\\s+");      // first line from Scanner
         // send Scanner to another class for further processing
         LR = new LevelReader(this, sc);
+        
+        // initialize player
+        player = new Player(this);
+        addObject(player, 256, 384);
+        this.lives = lives;
+        if (this.lives > MAX_LIVES) this.lives = MAX_LIVES;
         
         // initialize remaining helpers
         BH = new BackgroundHelper(this, LEVEL, Integer.parseInt(tokens[0]), tokens[1]);
@@ -210,6 +210,8 @@ public class Game extends World
     {
         // stop game if player is not initialized
         if (player == null) {
+            // go to the winning screen
+            Greenfoot.setWorld(new WinningScreen(gameSettings));
             return;
         }
         
