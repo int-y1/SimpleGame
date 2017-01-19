@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import greenfoot.*;
-import java.awt.Color;
-import java.io.InputStream;
-import java.util.Scanner;
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * Maintains the background.
@@ -34,7 +30,7 @@ public class BackgroundHelper
     private boolean doorOpen = false;
     
     /**
-     * Constructor for objects of class BackgroundHelper
+     * Constructor for objects of class BackgroundHelper.
      */
     public BackgroundHelper(Game g, int level, int mapLength, String mapPrefix)
     {
@@ -121,10 +117,17 @@ public class BackgroundHelper
         }
     }
     
+    /**
+     * Return true if the level has finished scrolling, otherwise false.
+     */
     public boolean atLevelEnd() {
-        return scrollTime==0;
+        return scrollTime == 0;
     }
     
+    /**
+     * Try to open the door.
+     * If the level is scrolling or the door is already open, this method does nothing.
+     */
     public void openDoor() {
         // door should open once at the end
         if (!atLevelEnd() || doorOpen) {
@@ -138,6 +141,9 @@ public class BackgroundHelper
         doorOpen = true;
     }
     
+    /**
+     * Return true if the door is open, otherwise false.
+     */
     public boolean isDoorOpen() {
         return doorOpen;
     }

@@ -79,7 +79,7 @@ public class Game extends World
             player = null;
             
             // go to the winning screen
-            Greenfoot.setWorld(new WinningScreen());
+            Greenfoot.setWorld(new WinningScreen(gameSettings));
             return;
         }
         else {

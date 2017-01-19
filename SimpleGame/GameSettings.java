@@ -1,7 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class GameSettings here.
+ * The GameSettings object stores all of the game's information in a single object.
+ * This object will be passed around all of the Worlds.
  * 
  * @author Jason Yuen
  * @version a0.1
@@ -9,7 +10,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class GameSettings
 {
     
-    // constructor
+    /**
+     * Constructor for the GameSettings object.
+     * Nothing needs to be initialized since the variables are already set.
+     */
     public GameSettings()
     {
         // do nothing

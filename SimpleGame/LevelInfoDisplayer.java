@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import greenfoot.*;
-import java.awt.Color;
-import java.io.InputStream;
-import java.util.Scanner;
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * The LevelInfoDisplayer class displays info about the player's progress.
