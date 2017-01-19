@@ -79,6 +79,9 @@ public class Game extends World
         }
         else {
             // check highest level reached
+            if (gameSettings.getHighestLevel() < LEVEL) {
+                gameSettings.setHighestLevel(LEVEL);
+            }
         }
         Scanner sc = new Scanner(stream);
         // parse the first line
@@ -162,6 +165,7 @@ public class Game extends World
         
         // check if game over
         if (playerDead()) {
+            gameSettings.setMusic("nothing.mp3");
             Greenfoot.playSound("deathPlayer.mp3");
             player.setImage("Isaac/death1.png");
             bgFading = true;
@@ -206,19 +210,17 @@ public class Game extends World
                             if (LEVEL%2 == 0) newLives = 0;
                             else {
                                 newLives = 1;
-                                Greenfoot.playSound("lifeUp.mp3");
                             }
                         }
                         else newLives = 1;
+                        
+                        if (newLives > 0) Greenfoot.playSound("lifeUp.mp3");
                         
                         // update game level
                         gameSettings.setLevel(gameSettings.getLevel()+1);
                         
                         // go to next level
                         Greenfoot.setWorld(new Game(gameSettings, lives+newLives, null));
-                        
-                         // reset music volume
-                        gameSettings.setMusicVolume(100);
                     }
                     catch (IOException e) {
                         Greenfoot.setWorld(new Title(gameSettings));
@@ -232,9 +234,6 @@ public class Game extends World
                 
                 
                 // fade out music
-                if (fadeAnimation%2 == 0){
-                    gameSettings.setMusicVolume(gameSettings.getMusicVolume()-1);
-                }
                 if (fadeAnimation == 175){
                     Greenfoot.playSound("deathMusic.mp3");  
                 }

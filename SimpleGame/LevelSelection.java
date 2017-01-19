@@ -13,7 +13,7 @@ import java.awt.FontMetrics;
 public class LevelSelection extends World
 {
     
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = false;
     
     private GameSettings gameSettings;
     
@@ -30,10 +30,10 @@ public class LevelSelection extends World
     private DisplayerMiddle levelDisplay;
     private DisplayerMiddle difficultyDisplay;
     
-    private final int MAX_LEVEL = 8;
-    private int levelSelect = 1;
+    private final int MAX_LEVEL;
+    private int levelSelect;
     private final int MAX_DIFFICULTY = 2;
-    private int difficulty = 1;
+    private int difficulty;
     
     /**
      * Constructor for objects of class LevelSelection.
@@ -43,7 +43,12 @@ public class LevelSelection extends World
     {
         // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
         super(512, 512, 1);
+        
+        // read game settings
         gameSettings = gs;
+        MAX_LEVEL = gameSettings.getHighestLevel();
+        levelSelect = MAX_LEVEL;
+        difficulty = gameSettings.getDifficulty();
         
         // set paint order for the title screen
         // earlier class is drawn on a later class
@@ -156,10 +161,12 @@ public class LevelSelection extends World
             // level number too low
             levelSelect = 1;
         }
-        else if (!(levelSelect <= MAX_LEVEL || DEBUG)) {
+        else if (levelSelect > MAX_LEVEL && !DEBUG) {
             // level number too high
             levelSelect = MAX_LEVEL;
         }
+        
+        gameSettings.setLevel(levelSelect);
         
         // update number to screen
         updateInfoDisplay();
@@ -174,10 +181,12 @@ public class LevelSelection extends World
             // difficulty too low
             difficulty = 1;
         }
-        else if (!(levelSelect <= MAX_LEVEL || DEBUG)) {
+        else if (difficulty > MAX_DIFFICULTY && !DEBUG) {
             // difficulty too high
             difficulty = MAX_DIFFICULTY;
         }
+        
+        gameSettings.setDifficulty(difficulty);
         
         // update number to screen
         updateInfoDisplay();
@@ -241,11 +250,8 @@ public class LevelSelection extends World
         
         // play button
         if (Greenfoot.mouseClicked(playButton)) {
-            // change game settings
-            gameSettings.setLevel(levelSelect);
-            gameSettings.setDifficulty(difficulty);
-            
             try {
+                // create a game with currect gameSettings
                 Greenfoot.setWorld(new Game(gameSettings, 2, null));
             }
             catch (IOException e) {

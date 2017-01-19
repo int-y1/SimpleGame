@@ -15,8 +15,9 @@ public class GameSettings
         // do nothing
     }
     
+    
     // level variable
-    private int level = 0;
+    private int level = 1;
     
     public void setLevel(int level)
     {
@@ -26,6 +27,20 @@ public class GameSettings
     public int getLevel()
     {
         return level;
+    }
+    
+    
+    // highest level variable
+    private int highestLevel = 1;
+    
+    public void setHighestLevel(int highestLevel)
+    {
+        this.highestLevel = highestLevel;
+    }
+    
+    public int getHighestLevel()
+    {
+        return highestLevel;
     }
     
     

@@ -128,6 +128,8 @@ public class Title extends World
         // debug button
         if (DEBUG && Greenfoot.mouseClicked(debugPlayButton)) {
             try {
+                gameSettings.setLevel(0);
+                gameSettings.setDifficulty(1);
                 Greenfoot.setWorld(new Game(gameSettings, 10, null));
             }
             catch (Exception e) {
