@@ -28,7 +28,6 @@ public class WinningScreen extends World
     {
         // actually, this World is incomplete
         // send the player to the credits
-        System.out.println("hello\n");
         Greenfoot.setWorld(new Credits(gameSettings));
     }
 }

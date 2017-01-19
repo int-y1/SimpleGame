@@ -14,7 +14,7 @@ public class Title extends World
     private GameSettings gameSettings;
     
     // debug
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = false;
     private final String DEBUG_BUTTON_PATH = "map0c.png";
     private DisplayerTop debugPlayButton;
     

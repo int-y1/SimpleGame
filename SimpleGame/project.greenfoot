@@ -1,5 +1,5 @@
 #Greenfoot properties
-#Thu Jan 19 13:05:02 EST 2017
+#Thu Jan 19 13:06:30 EST 2017
 target24.type=ClassTarget
 target16.name=GifDisplayer
 target13.editor.width=900
@@ -496,7 +496,7 @@ target27.y=130
 target27.x=190
 target23.editor.width=900
 dependency58.to=Game
-editor.swing.0.width=1132
+editor.swing.0.width=1133
 target29.naviview.expanded=true
 target24.editor.width=900
 target29.height=50
