@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 /**
- * Updates info about the player's progress.
+ * The LevelInfoDisplayer class displays info about the player's progress.
  * 
  * @author Jason Yuen
  * @version a0.1
@@ -18,16 +18,15 @@ public class LevelInfoDisplayer
     // level display variables
     private final int HEART_COUNT;
     private Heart[] hearts;
-    private int score = 0;
     private DisplayerTop exitButton;
     
     /**
-     * Constructor for objects of class LevelInfoDisplayer
+     * Constructor for objects of class LevelInfoDisplayer.
      */
-    public LevelInfoDisplayer(Game g, int lives, int maxLives, int score)
+    public LevelInfoDisplayer(Game g, int lives, int maxLives)
     {
         // initialize variables
-        game=g;
+        game = g;
         
         // initialize lives info
         HEART_COUNT = (maxLives+1)/2;
@@ -39,7 +38,6 @@ public class LevelInfoDisplayer
         
         // initialize first info
         setLives(lives);
-        setScore(score);
         
         // initialize the level display
         // exit button
@@ -47,6 +45,9 @@ public class LevelInfoDisplayer
         game.addObject(exitButton, 492, 496);
     }
     
+    /**
+     * Use the lives variable to update the images of the hearts.
+     */
     public void setLives(int lives) {
         // set heart images
         for (int i=0; i<HEART_COUNT; i++) {
@@ -56,10 +57,9 @@ public class LevelInfoDisplayer
         }
     }
     
-    public void setScore(int score) {
-        this.score = score;
-    }
-    
+    /**
+     * Return true if the player pressed the exit button, otherwise false.
+     */
     public boolean hitExit() {
         return Greenfoot.mouseClicked(exitButton);
     }

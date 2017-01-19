@@ -7,28 +7,31 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 
 /**
- * Write a description of class LevelReader here.
+ * The LevelReader class reads in a Scanner and starts events at certain times.
+ * Currently, this class spawns images and enemies.
  * 
  * @author Jason Yuen
- * @version a0.01
+ * @version a0.1
  */
 public class LevelReader
 {
     
+    // variables
     private final Game game;
     private int time = 0;
     
-    private Queue<Integer> eventTime = new LinkedList<Integer>();
-    private Queue<Integer> eventID = new LinkedList<Integer>();
+    // queues
+    private Queue<Integer>            eventTime = new LinkedList<Integer>();
+    private Queue<Integer>            eventID   = new LinkedList<Integer>();
     private Queue<ArrayList<String> > eventInfo = new LinkedList<ArrayList<String> >();
     
     /**
      * Constructor for objects of class LevelReader.
-     * 
+     * Converts the Scanner's input into 3 queues for easier processing.
      */
     public LevelReader(Game g, Scanner sc)
     {
-        game=g;
+        game = g;
         
         // read through the entire Scanner
         while (sc.hasNextInt()) {

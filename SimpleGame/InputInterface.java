@@ -12,17 +12,22 @@ import java.io.IOException;
  * The variables in this class are NOT protected.
  * It is up to the other classes to declare this object as private.
  * 
+ * This interface can be extended to view past replays.
+ * 
  * @author Jason Yuen
  * @version a0.1
  */
 public class InputInterface
 {
+    
+    // constants
     public final boolean REPLAY;
     public final boolean readD;
     
+    // keystrokes, either from the player or a string
     private Queue<Character> keystrokes = new LinkedList<Character>();
     
-    // this is the order of the variables
+    // this is the order of the key inputs
     public boolean right;
     public boolean up;
     public boolean left;
@@ -30,18 +35,22 @@ public class InputInterface
     public boolean s;
     public boolean d;
     
-    public InputInterface(String replayPath, boolean readD) throws IOException {
+    /**
+     * Initialize the InputInterface object.
+     * If replayKeys is not empty/null, use the keystrokes in the string and ignore the user.
+     */
+    public InputInterface(String replayKeys, boolean readD) throws IOException {
         // set variable readD
         this.readD = readD;
         
-        if (replayPath == null || replayPath == "") {
+        if (replayKeys == null || replayKeys == "") {
             REPLAY = false;
         }
         else {
-            System.out.printf("Reading Replay: %s\n", replayPath);
+            System.out.printf("Reading replay of size: %d\n", replayKeys.length());
             REPLAY = true;
             // get the file input
-            InputStream stream = getClass().getResourceAsStream(replayPath);
+            InputStream stream = getClass().getResourceAsStream(replayKeys);
             InputStreamReader in = new InputStreamReader(stream);
             // read all bytes
             int letter = in.read();
@@ -54,6 +63,9 @@ public class InputInterface
         }
     }
     
+    /**
+     * Get the next set of inputs.
+     */
     public void getNewStrokes() {
         if (REPLAY) {
             readFileStroke();
@@ -63,6 +75,9 @@ public class InputInterface
         }
     }
     
+    /**
+     * Read the set of inputs from the user.
+     */
     public void readUserStroke() {
         // replace the keys
         right = Greenfoot.isKeyDown("right");
@@ -91,6 +106,9 @@ public class InputInterface
         keystrokes.add((char) num);
     }
     
+    /**
+     * Read the set of inputs from the replay string.
+     */
     public void readFileStroke() {
         // get a keystroke
         int num;
@@ -116,18 +134,27 @@ public class InputInterface
         d = (num%2 == 1);
     }
     
+    /**
+     * Return true if this is a replay, otherwise false.
+     */
     public boolean isReplay() {
         return REPLAY;
     }
     
-    public void saveReplay(String replayPath) throws IOException {
-        // assume that REPLAY is true
-        FileWriter out = new FileWriter(replayPath);
+    /**
+     * Return the String that represents the user's replay.
+     * It is assumed that the user was playing the level.
+     */
+    public String getReplay() throws IOException {
+        // assume that REPLAY is false
         
-        while (!keystrokes.isEmpty()) {
-            out.write(keystrokes.poll());
+        // get keystrokes as a char array
+        char[] keyArr = new char[keystrokes.size()];
+        for (int i=0; !keystrokes.isEmpty(); i++) {
+            keyArr[i] = keystrokes.poll();
         }
         
-        out.close();
+        // return the String
+        return new String(keyArr);
     }
 }

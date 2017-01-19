@@ -97,7 +97,7 @@ public class Game extends World
         // initialize remaining helpers
         BH = new BackgroundHelper(this, LEVEL, Integer.parseInt(tokens[0]), tokens[1]);
         USER_INPUT = new InputInterface(replayPath, DIFFICULTY == 1);
-        LID = new LevelInfoDisplayer(this, lives, MAX_LIVES, 0);
+        LID = new LevelInfoDisplayer(this, lives, MAX_LIVES);
         
         // initialize music
         gameSettings.setMusic(tokens[2]);
