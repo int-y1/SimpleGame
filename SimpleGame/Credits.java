@@ -1,11 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.io.IOException;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 
 /**
- * Write a description of class Credits here.
+ * This World displays the creators of the game.
  * 
  * @author Jason Yuen
  * @version a0.1
@@ -13,20 +10,25 @@ import java.awt.FontMetrics;
 public class Credits extends World
 {
     
-    private final boolean DEBUG = false;
-    
     private GameSettings gameSettings;
     
+    // debug
+    private final boolean DEBUG = false;
+    
+    // constants
     private final String BG_IMAGE_PATH = "CreditsPage.png";
+    
+    // displayers
+    // all of the buttons are transparent and set to the top
     private DisplayerTop backButton;
     
     /**
-     * Constructor for objects of class Credits.
-     * 
+     * Constructor for the Credits world.
+     * Create one button.
      */
     public Credits(GameSettings gs)
     {
-        // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
+        // set screen to 512x512 with 1x1 pixels
         super(512, 512, 1);
         gameSettings = gs;
         

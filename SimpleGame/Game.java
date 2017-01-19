@@ -1,15 +1,11 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.ArrayList;
-
 import java.util.Scanner;
 import java.io.InputStream;
 import java.io.IOException;
 
 /**
- * Write a description of class Game here.
+ * Play a Game level with the current game settings.
  * 
  * @author Jason Yuen
  * @version a0.1
@@ -17,40 +13,37 @@ import java.io.IOException;
 public class Game extends World
 {
     
-    private final int MAX_LIVES = 10;
-    
     private GameSettings gameSettings;
+    
+    // constants
+    private final String LEVEL_PATH = "/levels/level%d.txt";
+    private final int MAX_LIVES = 10;
     private final int LEVEL;
     private final int DIFFICULTY;
-    private final String LEVEL_PATH= "/levels/level%d.txt";
+    private final int FADE_DURATION = 200;      // duration of any fading animation
     
+    // variables
+    private boolean bgFading = false;
+    
+    // helpers
     private final InputInterface USER_INPUT;
     private final LevelReader LR;
     private final BackgroundHelper BH;
     private final LevelInfoDisplayer LID;
-    private boolean bgFading = false;
     
     // player variables
     private Player player;
     private int lives;
-    private final int FADE_DURATION = 200;      // duration of any fading animation
-    private int fadeAnimation=FADE_DURATION;
+    private int fadeAnimation = FADE_DURATION;
     
     /**
      * Constructor for objects of class Game.
-     * This method is used for playing a level.
-     * 
+     * The constructor is used to set up and play a level.
      */
     public Game(GameSettings gs, int lives, String replayPath) throws IOException
     {
-        // screen size is 512x512 pixels
+        // set screen to 512x512 with 1x1 pixels, with no borders
         super(512, 512, 1, false);
-        
-        // get info from game settings
-        gameSettings = gs;
-        LEVEL = gs.getLevel();
-        DIFFICULTY = gs.getDifficulty();
-        this.lives = lives;
         
         // set paint order for the game
         // earlier class is drawn on a later class
@@ -63,18 +56,30 @@ public class Game extends World
                       DisplayerMiddle.class,
                       DisplayerBottom.class);
         
+        // get info from game settings
+        gameSettings = gs;
+        LEVEL = gs.getLevel();
+        DIFFICULTY = gs.getDifficulty();
+        
+        // initialize player
+        player = new Player(this);
+        addObject(player, 256, 384);
+        this.lives = lives;
+        if (this.lives > MAX_LIVES) this.lives = MAX_LIVES;
+        
         // get the level file into a Scanner
         InputStream stream = getClass().getResourceAsStream(String.format(LEVEL_PATH, LEVEL));
         if (stream == null) {
-            // level does not exist
-            // player completed the game
-            Greenfoot.setWorld(new WinningScreen());
-            // set remaining variables to null
+            // level does not exist, player completed the game
+            // set uninitialized variables to null
             LR = null;
             BH = null;
             USER_INPUT = null;
             LID = null;
             player = null;
+            
+            // go to the winning screen
+            Greenfoot.setWorld(new WinningScreen());
             return;
         }
         else {
@@ -96,12 +101,6 @@ public class Game extends World
         
         // initialize music
         gameSettings.setMusic(tokens[2]);
-        
-        // initialize player
-        player = new Player(this);
-        this.addObject(player, 256, 384);
-        if (lives > MAX_LIVES) lives = MAX_LIVES;
-        
     }
     
     
@@ -140,18 +139,36 @@ public class Game extends World
     
     // player methods
     
+    /**
+     * Get the distance from the coordinates to the player.
+     */
     public int getPlayerDist(int x, int y)
     {
         // send to player
         return player.getDist(x, y);
     }
     
+    /**
+     * Get the angle from the coordinates to the player.
+     */
     public double getPlayerAngle(int x, int y)
     {
         // send to player
         return player.getAngle(x, y);
     }
     
+    /**
+     * Get true if the player is alive, otherwise false.
+     */
+    public boolean playerDead()
+    {
+        return lives<=0;
+    }
+    
+    /**
+     * Make the player lose a life, if possible.
+     * The player cannot lose a life when invincible, or if the background is fading.
+     */
     public void playerLoseLife()
     {
         // check if invincible
@@ -177,16 +194,18 @@ public class Game extends World
         }
     }
     
-    public boolean playerDead()
-    {
-        return lives<=0;
-    }
-    
+    /**
+     * Get true if the Game is fading, otherwise false.
+     */
     public boolean isFading()
     {
         return bgFading;
     }
     
+    /**
+     * Perform one frame of the game.
+     * The logic splits into 2 parts, depending on whether the background is fading.
+     */
     public void act()
     {
         // stop game if player is not initialized
@@ -227,11 +246,12 @@ public class Game extends World
                     }
                 }
             }
+            
+            // animation was not done
             fadeAnimation--;
             
             if (playerDead()) {
                 // player is dead
-                
                 
                 // fade out music
                 if (fadeAnimation == 175){
@@ -257,19 +277,11 @@ public class Game extends World
             BH.fadeScreen(((FADE_DURATION-fadeAnimation)*255) / FADE_DURATION);
         }
         else {
-            // player is not dead
-            // check exit button
-            if (LID.hitExit()) {
-                // kill the player
-                lives=0;
-                player.setImage("Isaac/death1.png");
-                bgFading = true;
-                return;
-            }
+            // game is ongoing
             
             // check if level is done
             if (BH.isDoorOpen()) {
-                // check if player is at the end
+                // check if player is at the door
                 if (256-32 <= player.getX() && player.getX() <= 256+32) {
                     if (player.getY() == 32) {
                         // player is at the door
@@ -282,6 +294,15 @@ public class Game extends World
             USER_INPUT.getNewStrokes();
             LR.tick();
             BH.tickBackground();
+            
+            // check exit button
+            if (LID.hitExit()) {
+                // kill the player
+                lives = 0;
+                player.setImage("Isaac/death1.png");
+                bgFading = true;
+                return;
+            }
         }
     }
 }

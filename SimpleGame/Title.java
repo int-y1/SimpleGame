@@ -51,15 +51,20 @@ public class Title extends World
         // set screen to 512x512 with 1x1 pixels
         super(512, 512, 1);
         
-        gameSettings = gs;
-        
         // set paint order for the title screen
         // earlier class is drawn on a later class
         setPaintOrder(DisplayerTop.class,
                       GifDisplayer.class);
         
+        // read game settings
+        gameSettings = gs;
+        
         // make the background
         addObject(new GifDisplayer(BG_IMAGE_PATH), 256, 256);
+        
+        // set music
+        gameSettings.setMusic("menu.mp3");
+        
         
         // make the buttons
         GreenfootImage temp;
@@ -92,9 +97,7 @@ public class Title extends World
         exitButton = new DisplayerTop(temp);
         addObject(exitButton, 422, 214);
         
-        // set music
-        gameSettings.setMusic("menu.mp3");
-        
+        // debug button
         if (DEBUG) {
             debugPlayButton = new DisplayerTop(PLAY_BUTTON_PATH);
             addObject(debugPlayButton, 64, 480);
@@ -131,6 +134,7 @@ public class Title extends World
         // debug button
         if (DEBUG && Greenfoot.mouseClicked(debugPlayButton)) {
             try {
+                // set up level 0
                 gameSettings.setLevel(0);
                 gameSettings.setDifficulty(1);
                 Greenfoot.setWorld(new Game(gameSettings, 10, null));

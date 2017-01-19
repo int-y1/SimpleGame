@@ -1,11 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.io.IOException;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 
 /**
- * Write a description of class LevelSelection here.
+ * The LevelSelection world lets the player choose a level and a difficulty.
+ * When the player "descends" (enters the game), the appropriate Game world begins.
+ * The player may choose to go back to the Title world.
  * 
  * @author Jason Yuen
  * @version a0.1
@@ -13,12 +14,27 @@ import java.awt.FontMetrics;
 public class LevelSelection extends World
 {
     
-    private final boolean DEBUG = false;
-    
     private GameSettings gameSettings;
     
-    private final String BG_IMAGE_PATH = "LevelScreen.png";
+    // debug
+    private final boolean DEBUG = false;
     
+    // constants
+    private final String BG_IMAGE_PATH = "LevelScreen.png";
+    private final int MAX_LEVEL;
+    private final int MAX_DIFFICULTY = 2;
+    
+    // variables
+    private int levelSelect;
+    private int difficulty;
+    
+    // level scrolling variables
+    // levels can be scrolled with the left/right arrow keys
+    int SCROLL_MAX_COOLDOWN = 15;
+    int scrollCooldown = 0;
+    
+    // displayers
+    // all of the buttons are transparent and set to the top
     private DisplayerTop backButton;
     private DisplayerTop left1Button;
     private DisplayerTop right1Button;
@@ -26,29 +42,18 @@ public class LevelSelection extends World
     private DisplayerTop right2Button;
     private DisplayerTop playButton;
     
-    // game info variables
+    // game info displayers
     private DisplayerMiddle levelDisplay;
     private DisplayerMiddle difficultyDisplay;
     
-    private final int MAX_LEVEL;
-    private int levelSelect;
-    private final int MAX_DIFFICULTY = 2;
-    private int difficulty;
-    
     /**
-     * Constructor for objects of class LevelSelection.
-     * 
+     * Constructor for the LevelSelection world.
+     * This creates all of the necessary buttons in the correct locations.
      */
     public LevelSelection(GameSettings gs)
     {
-        // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
+        // set screen to 512x512 with 1x1 pixels
         super(512, 512, 1);
-        
-        // read game settings
-        gameSettings = gs;
-        MAX_LEVEL = gameSettings.getHighestLevel();
-        levelSelect = MAX_LEVEL;
-        difficulty = gameSettings.getDifficulty();
         
         // set paint order for the title screen
         // earlier class is drawn on a later class
@@ -56,8 +61,15 @@ public class LevelSelection extends World
                       DisplayerMiddle.class,
                       GifDisplayer.class);
         
+        // read game settings
+        gameSettings = gs;
+        MAX_LEVEL = gameSettings.getHighestLevel();
+        levelSelect = MAX_LEVEL;
+        difficulty = gameSettings.getDifficulty();
+        
         // make the background
         addObject(new GifDisplayer(BG_IMAGE_PATH), 256, 256);
+        
         
         // make buttons
         GreenfootImage temp;
@@ -104,14 +116,20 @@ public class LevelSelection extends World
         playButton = new DisplayerTop(temp);
         addObject(playButton,260,485);
         
+        
         // game info display
         levelDisplay = new DisplayerMiddle("nothing.png");
         addObject(levelDisplay,260,220);
         difficultyDisplay = new DisplayerMiddle("nothing.png");
         addObject(difficultyDisplay,260,370);
+        
         updateInfoDisplay();
     }
     
+    /**
+     * Update the two pieces of text shown on the LevelSelection world.
+     * The modified variables are: levelDisplay, difficultyDisplay
+     */
     private void updateInfoDisplay()
     {
         // set up necessary variables
@@ -119,6 +137,7 @@ public class LevelSelection extends World
         Font tempFont = new Font("Comic Sans MS", Font.PLAIN, 40);
         int textWidth;
         String str;
+        
         
         // do level display
         // set up the GreenfootImage
@@ -134,6 +153,7 @@ public class LevelSelection extends World
         
         // update the image
         levelDisplay.setImage(tempImage);
+        
         
         // do difficulty display
         // set up the GreenfootImage
@@ -152,6 +172,10 @@ public class LevelSelection extends World
         difficultyDisplay.setImage(tempImage);
     }
     
+    /**
+     * Change the level by the specified amount.
+     * The level stays within a fixed boundary, unless DEBUG is true.
+     */
     private void levelChange(int amount)
     {
         // change the level
@@ -172,6 +196,11 @@ public class LevelSelection extends World
         updateInfoDisplay();
     }
     
+    
+    /**
+     * Change the difficulty by the specified amount.
+     * The difficulty stays within a fixed boundary, unless DEBUG is true.
+     */
     private void difficultyChange(int amount)
     {
         // change the difficulty
@@ -191,10 +220,6 @@ public class LevelSelection extends World
         // update number to screen
         updateInfoDisplay();
     }
-    
-    // level scrolling variables
-    int SCROLL_MAX_COOLDOWN = 15;
-    int scrollCooldown = 0;
     
     /**
      * Every act, this World reads the user input and responds appropriately.
@@ -254,8 +279,8 @@ public class LevelSelection extends World
                 // create a game with currect gameSettings
                 Greenfoot.setWorld(new Game(gameSettings, 2, null));
             }
-            catch (IOException e) {
-                //
+            catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

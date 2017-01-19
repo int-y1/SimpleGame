@@ -30,21 +30,21 @@ public class Options extends World
     private DisplayerMiddle fly;        // not a button
     
     /**
-     * Constructor for objects of class Options.
-     * 
-     * @param gs Pointer to the game's current state.
+     * Constructor for the Options world.
      */
     public Options(GameSettings gs)
     {
-        // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
+        // set screen to 512x512 with 1x1 pixels
         super(512, 512, 1);
-        gameSettings = gs;
         
         // set paint order for the title screen
         // earlier class is drawn on a later class
         setPaintOrder(DisplayerTop.class,
                       DisplayerMiddle.class,
                       GifDisplayer.class);
+        
+        // read game settings
+        gameSettings = gs;
         
         // make the background
         addObject(new GifDisplayer(BG_IMAGE_PATH), 256, 256);
