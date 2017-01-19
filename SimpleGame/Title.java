@@ -2,7 +2,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Color;
 
 /**
- * Write a description of class Title here.
+ * The player will see the Title world when starting the game.
+ * The player can choose to view credits/options and start/exit the game.
  * 
  * @author Jason Yuen
  * @version a0.1
@@ -10,15 +11,19 @@ import java.awt.Color;
 public class Title extends World
 {
     
+    private GameSettings gameSettings;
+    
+    // debug
     private final boolean DEBUG = true;
     private final String DEBUG_BUTTON_PATH = "map0c.png";
     private DisplayerTop debugPlayButton;
     
-    private GameSettings gameSettings;
-    
+    // constants
     private final String PLAY_BUTTON_PATH = "map0c.png";
     private final String BG_IMAGE_PATH = "TitleScreen.gif";
     
+    // displayers
+    // all of the buttons are transparent and set to the top
     private DisplayerTop playButton;
     private DisplayerTop optionsButton;
     private DisplayerTop creditsButton;
@@ -26,29 +31,27 @@ public class Title extends World
     
     /**
      * Constructor to start the game.
+     * This is called only once at the start of the program.
      */
     public Title()
     {
-        // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
+        // set screen to 512x512 with 1x1 pixels
         super(512, 512, 1);
         
-        Greenfoot.setWorld(new Title(null));
+        // move to the actual constructor
+        Greenfoot.setWorld(new Title(new GameSettings()));
     }
     
     /**
      * The real constructor for this game.
+     * Initialize all of the buttons.
      */
     public Title(GameSettings gs)
     {
-        // Create a new world with 512x512 cells with a cell size of 1x1 pixels.
+        // set screen to 512x512 with 1x1 pixels
         super(512, 512, 1);
         
-        if (gs == null) {
-            gameSettings = new GameSettings();
-        }
-        else {
-            gameSettings = gs;
-        }
+        gameSettings = gs;
         
         // set paint order for the title screen
         // earlier class is drawn on a later class
@@ -89,7 +92,7 @@ public class Title extends World
         exitButton = new DisplayerTop(temp);
         addObject(exitButton, 422, 214);
         
-        // create music
+        // set music
         gameSettings.setMusic("menu.mp3");
         
         if (DEBUG) {

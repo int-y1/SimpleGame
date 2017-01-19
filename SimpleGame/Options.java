@@ -1,11 +1,9 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.io.IOException;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 
 /**
- * Write a description of class Options here.
+ * The Options World contains one option.
+ * You can choose to play/mute the background music.
  * 
  * @author Jason Yuen
  * @version a0.1
@@ -13,21 +11,28 @@ import java.awt.FontMetrics;
 public class Options extends World
 {
     
-    private final boolean DEBUG = false;
-    private final String BG_IMAGE_PATH = "OptionScreen.png";
-    
     private GameSettings gameSettings;
     
+    // debug
+    private final boolean DEBUG = false;
+    
+    // constants
+    private final String BG_IMAGE_PATH = "OptionScreen.png";
+    
+    // variables
+    private boolean musicOn;
+    
+    // displayers
+    // all of the buttons are transparent and set to the top
     private DisplayerTop backButton;
     private DisplayerTop yesButton;
     private DisplayerTop noButton;
-    private DisplayerTop fly;
-    
-    private boolean musicOn;
+    private DisplayerMiddle fly;        // not a button
     
     /**
      * Constructor for objects of class Options.
      * 
+     * @param gs Pointer to the game's current state.
      */
     public Options(GameSettings gs)
     {
@@ -37,7 +42,8 @@ public class Options extends World
         
         // set paint order for the title screen
         // earlier class is drawn on a later class
-        setPaintOrder(Displayer.class,
+        setPaintOrder(DisplayerTop.class,
+                      DisplayerMiddle.class,
                       GifDisplayer.class);
         
         // make the background
@@ -69,18 +75,22 @@ public class Options extends World
         
         // fly
         musicOn = (gameSettings.getMusicVolume() > 0);
-        fly = new DisplayerTop("100flies1.png");
-        addObject(fly,342,250);
+        fly = new DisplayerMiddle("100flies1.png");
+        addObject(fly,0,0);
         moveFly();
     }
     
+    /**
+     * Choose position of fly, based on musicOn.
+     */
     private void moveFly()
     {
-        // choose position of fly, based on musicSelection
         if (musicOn) {
+            // above yes button
             fly.setLocation(yesButton.getX(), yesButton.getY()-25);
         }
         else {
+            // above no button
             fly.setLocation(noButton.getX(), noButton.getY()-25);
         }
     }
